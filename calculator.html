@@ -1,0 +1,1572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RetireWise India — Free Retirement Withdrawal Calculator | NPS EPF PPF</title>
+<meta name="description" content="India's most accurate free retirement withdrawal calculator. Enter NPS, EPF, PPF, Mutual Fund and FD balances — exact monthly income after FY2025-26 taxes. 5 strategies. No login.">
+<link rel="canonical" href="https://retire-wise-calculator.netlify.app/calculator.html">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --g:#00C896;--gd:#009E78;--gl:#E6FBF5;--g3:#9EE0CB;
+  --ink:#0D1117;--ink2:#374151;--ink3:#6B7280;--ink4:#9CA3AF;
+  --bg:#F0F2F6;--card:#FFFFFF;--bd:#E5E7EB;--bd2:#D1D5DB;
+  --red:#EF4444;--redl:#FEF2F2;
+  --amber:#F59E0B;--ambl:#FFFBEB;
+  --blue:#3B82F6;--bluel:#EFF6FF;
+  --sh:0 1px 3px rgba(0,0,0,.05),0 4px 16px rgba(0,0,0,.04);
+  --sh2:0 8px 32px rgba(0,0,0,.12);
+  --r:10px;--r2:14px;
+}
+html,body{height:100%;font-family:'Sora',sans-serif;background:var(--bg);color:var(--ink);font-size:13px;line-height:1.5;overflow:hidden}
+
+/* ── TOP BAR ── */
+.topbar{height:52px;background:var(--card);border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:0 20px;z-index:200;position:relative}
+.logo{font-size:16px;font-weight:700;letter-spacing:-.3px}.logo b{color:var(--g)}
+.logo-sub{font-size:10px;font-weight:500;color:var(--ink4);background:var(--bg);border-radius:20px;padding:2px 9px;margin-left:6px}
+.topbar-mid{font-size:10px;color:var(--ink4);display:flex;align-items:center;gap:6px}
+.topbar-mid span{color:var(--bd2)}
+.topbar-right{display:flex;align-items:center;gap:8px}
+.btn-tour{background:var(--bg);border:1px solid var(--bd2);border-radius:8px;padding:5px 12px;cursor:pointer;font-size:11px;font-weight:600;color:var(--ink3);font-family:'Sora',sans-serif;transition:all .15s}
+.btn-tour:hover{border-color:var(--g);color:var(--g)}
+.fire-btn{display:flex;align-items:center;gap:6px;background:var(--ambl);border:1.5px solid #FCD34D;border-radius:20px;padding:5px 14px;cursor:pointer;font-size:11px;font-weight:700;color:#92400E;font-family:'Sora',sans-serif;transition:all .2s}
+.fire-btn.on{background:#F59E0B;border-color:#F59E0B;color:#fff}
+
+/* ── LAYOUT ── */
+.layout{display:grid;grid-template-columns:420px 1fr;height:calc(100vh - 52px);overflow:hidden}
+
+/* ── LEFT SIDEBAR ── */
+.left{background:var(--card);border-right:1px solid var(--bd);overflow-y:auto;display:flex;flex-direction:column}
+.left::-webkit-scrollbar{width:6px}.left::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:3px;min-height:40px}.left::-webkit-scrollbar-track{background:var(--bg);border-radius:3px}.left::-webkit-scrollbar-thumb:hover{background:var(--ink4)}
+
+.sb{border-bottom:1px solid var(--bd);padding:16px 20px;transition:background .1s}
+.sb:last-child{border-bottom:none;flex:1;padding-bottom:40px}
+.sb-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.sb-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--ink4);display:flex;align-items:center;gap:6px}
+.sb-ico{width:18px;height:18px;border-radius:5px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:10px}
+
+/* Sliders */
+.sl-field{margin-bottom:15px}
+.sl-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.sl-lbl{font-size:12px;font-weight:500;color:var(--ink2);display:flex;align-items:center;gap:5px}
+.sl-val{font-size:15px;font-weight:700;color:var(--g);font-family:'DM Mono',monospace;background:var(--gl);border-radius:6px;padding:3px 10px;min-width:60px;text-align:center}
+input[type=range]{width:100%;height:3px;border-radius:2px;outline:none;cursor:pointer;-webkit-appearance:none;background:linear-gradient(to right,var(--g) 0%,var(--g) var(--p,0%),var(--bg) var(--p,0%),var(--bg) 100%)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:#fff;border:2.5px solid var(--g);cursor:pointer;box-shadow:0 1px 6px rgba(0,200,150,.3)}
+.sl-hint{font-size:10px;color:var(--ink4);margin-top:4px}
+.sl-err{font-size:10px;color:var(--red);font-weight:600;margin-top:4px;display:none}
+.sl-err.show{display:block}
+
+/* Tooltip info icon */
+.tip{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;background:var(--bd);color:var(--ink4);font-size:8px;font-weight:700;cursor:help;position:relative;flex-shrink:0}
+.tip::after{content:attr(data-tip);position:absolute;left:50%;transform:translateX(-50%);bottom:calc(100% + 6px);background:var(--ink);color:#fff;font-size:10px;font-weight:400;line-height:1.4;padding:7px 10px;border-radius:6px;white-space:normal;width:210px;text-align:left;box-shadow:var(--sh2);z-index:9999;pointer-events:none;opacity:0;transition:opacity .15s}
+.tip:hover::after{opacity:1}
+.tip::before{content:'';position:absolute;left:50%;transform:translateX(-50%);bottom:calc(100% + 2px);border:4px solid transparent;border-top-color:var(--ink);pointer-events:none;opacity:0;transition:opacity .15s}
+.tip:hover::before{opacity:1}
+
+/* Account cards */
+.acc-list{display:flex;flex-direction:column;gap:8px}
+.acc-card{border:1.5px solid var(--bd);border-radius:var(--r);overflow:hidden;transition:border-color .2s}
+.acc-card.active{border-color:var(--g3)}
+.acc-head{display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;background:#fff;transition:background .15s;user-select:none}
+.acc-head:hover{background:var(--bg)}
+.acc-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.acc-name{font-size:12px;font-weight:600;color:var(--ink2)}
+.acc-badge{font-size:9px;font-weight:700;padding:2px 7px;border-radius:8px;white-space:nowrap}
+.tf{background:var(--gl);color:var(--gd)}.pt{background:var(--bluel);color:#1D4ED8}.tx{background:var(--redl);color:var(--red)}
+.acc-chev{font-size:10px;color:var(--ink4);transition:transform .2s}
+.acc-chev.open{transform:rotate(180deg)}
+.acc-body{display:none;padding:12px;background:#FAFBFC;border-top:1px solid var(--bd)}
+.acc-body.open{display:block}
+.acc-inputs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.inp-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink4);display:block;margin-bottom:5px}
+.inp-box{display:flex;align-items:center;background:#fff;border:1.5px solid var(--bd);border-radius:8px;overflow:hidden;transition:border-color .15s}
+.inp-box:focus-within{border-color:var(--g)}
+.inp-pfx{padding:0 8px;font-size:11px;font-weight:700;color:var(--ink4);border-right:1px solid var(--bd);white-space:nowrap}
+.inp-sfx{padding:0 8px;font-size:11px;font-weight:700;color:var(--ink4);border-left:1px solid var(--bd);white-space:nowrap}
+.inp-box input{flex:1;background:transparent;border:none;outline:none;padding:8px 10px;font-size:13px;font-weight:600;color:var(--ink);font-family:'DM Mono',monospace;min-width:0}
+.acc-rethint{font-size:10px;color:var(--ink4);margin-bottom:8px}
+.acc-contrib{margin-top:10px;padding-top:10px;border-top:1px dashed var(--bd)}
+.acc-rules{background:var(--gl);border-radius:7px;padding:8px 10px}
+.acc-rule{font-size:10px;color:var(--gd);padding:2px 0;display:flex;align-items:flex-start;gap:5px}
+.acc-rule::before{content:'✓';font-weight:700;flex-shrink:0;margin-top:1px}
+
+/* Totals bar */
+.totals{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:12px 20px;background:var(--bg);border-top:1px solid var(--bd);border-bottom:1px solid var(--bd)}
+.tot-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--ink4);margin-bottom:2px}
+.tot-val{font-size:14px;font-weight:700;color:var(--gd);font-family:'DM Mono',monospace;letter-spacing:-.3px}
+
+/* Extra / SIP */
+.einp{display:flex;align-items:center;background:var(--bg);border:1.5px solid var(--bd);border-radius:8px;overflow:hidden;transition:border-color .15s}
+.einp:focus-within{border-color:var(--g);background:#fff}
+.einp .epfx{padding:0 10px;font-size:11px;font-weight:700;color:var(--ink4);border-right:1px solid var(--bd);white-space:nowrap}
+.einp input{flex:1;background:transparent;border:none;outline:none;padding:9px 12px;font-size:14px;font-weight:600;color:var(--ink);font-family:'DM Mono',monospace}
+.sip-note{font-size:11px;background:var(--gl);border-radius:6px;padding:8px 10px;color:var(--gd);margin-top:8px;display:none}
+.sip-note.show{display:block}
+
+/* Strategy list */
+.strat-list{display:flex;flex-direction:column;gap:5px}
+.sp{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;border-radius:8px;cursor:pointer;border:1.5px solid var(--bd);background:#fff;transition:all .15s}
+.sp:hover{border-color:var(--g)}
+.sp.on{border-color:var(--g);background:var(--gl)}
+.sp-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.sp-content{flex:1;min-width:0}
+.sp-top{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.sp-name{font-size:12px;font-weight:600;color:var(--ink2)}
+.sp.on .sp-name{color:var(--gd)}
+.sp-rate{font-size:11px;font-weight:700;color:var(--ink4);font-family:'DM Mono',monospace;background:var(--bg);padding:2px 6px;border-radius:4px;white-space:nowrap}
+.sp.on .sp-rate{background:rgba(0,200,150,.15);color:var(--gd)}
+.sp-tagline{font-size:10px;color:var(--ink4);margin-top:2px}
+.sp.on .sp-tagline{color:var(--gd)}
+.sp-explain{font-size:11px;color:var(--ink2);margin-top:8px;line-height:1.6;padding:8px 10px;background:#F4F6F9;border-radius:6px;display:none}
+.sp.on .sp-explain{display:block}
+
+/* ── RIGHT PANEL ── */
+.right{overflow-y:auto;padding:20px 24px;background:var(--bg)}
+.right::-webkit-scrollbar{width:7px}.right::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:4px;min-height:40px}.right::-webkit-scrollbar-track{background:var(--bg)}.right::-webkit-scrollbar-thumb:hover{background:var(--ink4)}
+
+.ad{background:var(--card);border:1.5px dashed var(--bd2);border-radius:8px;padding:10px;text-align:center;font-size:10px;font-weight:700;color:var(--ink4);text-transform:uppercase;letter-spacing:.07em;margin-bottom:14px}
+
+/* FIRE banner */
+.fire-banner{background:linear-gradient(135deg,#FFFBEB,#FFF7ED);border:1.5px solid #FCD34D;border-radius:var(--r2);padding:14px 20px;margin-bottom:14px;display:none;align-items:center;gap:14px}
+.fire-banner.show{display:flex}
+.fbn{font-size:30px;font-weight:700;color:var(--amber);font-family:'DM Mono',monospace}
+.fbt{font-size:13px;font-weight:700;color:#92400E}
+.fbs{font-size:11px;color:#B45309;margin-top:2px}
+
+/* Hero metrics */
+.hero{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+.hc{background:var(--card);border-radius:var(--r2);border:1px solid var(--bd);padding:20px 20px 16px;box-shadow:var(--sh);position:relative;overflow:hidden;transition:all .2s}
+.hc::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:3px 3px 0 0}
+.hg::before{background:linear-gradient(90deg,#00C896,#00A87E)}
+.hb::before{background:linear-gradient(90deg,#3B82F6,#6366F1)}
+.ho::before{background:linear-gradient(90deg,#F59E0B,#F97316)}
+.hc.selected{box-shadow:0 0 0 2px var(--g),var(--sh)}
+.h-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink4);margin-bottom:7px}
+.h-yr{font-size:10px;font-weight:600;color:var(--ink4);margin-bottom:4px;background:var(--bg);display:inline-block;padding:2px 8px;border-radius:10px}
+.h-val{font-size:30px;font-weight:700;color:var(--ink);letter-spacing:-.8px;line-height:1;font-family:'DM Mono',monospace}
+.h-sub{font-size:11px;color:var(--ink3);margin-top:5px}
+.h-tag{display:inline-block;font-size:10px;font-weight:700;padding:3px 10px;border-radius:10px;margin-top:7px}
+.ok{background:var(--gl);color:var(--gd)}.warn{background:var(--ambl);color:#92400E}.bad{background:var(--redl);color:var(--red)}.info{background:var(--bluel);color:#1D4ED8}
+
+/* Chart card */
+.chart-card{background:var(--card);border-radius:var(--r2);border:1px solid var(--bd);padding:20px 22px;box-shadow:var(--sh);margin-bottom:14px}
+.cc-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;gap:10px}
+.cc-title{font-size:14px;font-weight:700}
+.cc-meta{font-size:11px;color:var(--ink4);margin-top:3px}
+.cc-hint{font-size:11px;color:var(--blue);margin-top:3px;font-weight:500}
+.cc-grow{font-size:11px;color:var(--gd);font-weight:600;margin-top:3px;display:none}
+.cc-grow.show{display:block}
+.tab-g{display:flex;background:var(--bg);border-radius:8px;padding:3px;gap:2px;flex-shrink:0}
+.tab{padding:5px 12px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;color:var(--ink3);border:none;background:transparent;font-family:'Sora',sans-serif;transition:all .15s}
+.tab.on{background:#fff;color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.chart-wrap{position:relative;height:240px;cursor:pointer}
+
+/* Two column */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.panel{background:var(--card);border-radius:var(--r2);border:1px solid var(--bd);padding:18px 20px;box-shadow:var(--sh)}
+.panel-title{font-size:13px;font-weight:700;margin-bottom:12px}
+
+/* Breakdown */
+.br-item{margin-bottom:10px}
+.br-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.br-name{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--ink2)}
+.br-pct{font-size:11px;font-weight:700;color:var(--ink3);font-family:'DM Mono',monospace}
+.br-track{height:16px;background:var(--bg);border-radius:4px;overflow:hidden}
+.br-fill{height:100%;border-radius:4px;display:flex;align-items:center;padding:0 7px;font-size:9px;font-weight:700;color:#fff;white-space:nowrap;transition:width .7s cubic-bezier(.4,0,.2,1)}
+.br-sub{font-size:9px;color:var(--ink4);margin-top:2px;display:flex;align-items:center;gap:5px}
+.br-badge{font-size:9px;font-weight:700;padding:1px 6px;border-radius:6px}
+
+/* Tax panel */
+.tax-toggle-row{display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;margin-bottom:5px}
+.tax-toggle-l{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.eff-pill{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;transition:all .2s}
+.eff-ok{background:var(--gl);color:var(--gd)}.eff-warn{background:var(--ambl);color:#92400E}
+.tax-arr{font-size:11px;color:var(--ink4);transition:transform .2s}
+.tax-arr.open{transform:rotate(180deg)}
+.tax-sum{font-size:11px;color:var(--ink4);margin-bottom:2px}
+.tax-body{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--bd)}
+.tax-body.open{display:block}
+.tax-sec{margin-bottom:12px}
+.tax-sec-hd{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--ink4);margin-bottom:5px;padding-bottom:3px;border-bottom:1px dashed var(--bd)}
+.tr{display:flex;justify-content:space-between;font-size:11px;padding:2px 0}
+.trl{color:var(--ink3)}.trv{font-weight:600;font-family:'DM Mono',monospace}
+.trv.neg{color:var(--red)}.trv.pos{color:var(--g)}
+.tax-grand{background:var(--gl);border-radius:8px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.tgl{font-size:12px;font-weight:700;color:var(--gd)}.tgv{font-size:16px;font-weight:700;color:var(--g);font-family:'DM Mono',monospace}
+.tax-note{font-size:10px;color:var(--ink4);margin-top:8px;padding-top:8px;border-top:1px solid var(--bd);line-height:1.5}
+
+/* Strategy compare */
+.sc-card{background:var(--card);border-radius:var(--r2);border:1px solid var(--bd);padding:18px 20px;box-shadow:var(--sh);margin-bottom:12px}
+.sc-rows{display:flex;flex-direction:column;gap:5px;margin-top:10px}
+.sc-row{display:grid;grid-template-columns:110px 1fr 80px;align-items:center;gap:10px;padding:7px 10px;border-radius:8px;cursor:pointer;transition:all .15s;border:1.5px solid transparent}
+.sc-row:hover{background:var(--bg)}
+.sc-row.on{background:var(--gl);border-color:var(--g3)}
+.sc-n{font-size:11px;font-weight:600;color:var(--ink2)}
+.sc-row.on .sc-n{color:var(--gd);font-weight:700}
+.sc-track{height:22px;background:var(--bg);border-radius:5px;overflow:hidden}
+.sc-fill{height:100%;border-radius:5px;display:flex;align-items:center;padding:0 8px;font-size:10px;font-weight:700;color:#fff;white-space:nowrap;min-width:50px;transition:width .7s cubic-bezier(.4,0,.2,1)}
+.sc-yr{font-size:10px;font-weight:700;color:var(--ink3);text-align:right;font-family:'DM Mono',monospace}
+
+/* Shortfall */
+.sf{border-radius:var(--r2);padding:16px 18px;border:1.5px solid;margin-bottom:12px}
+.sf-safe{background:#F0FDF9;border-color:#6EE7C9}
+.sf-danger{background:var(--redl);border-color:#FCA5A5}
+.sf-fire{background:var(--ambl);border-color:#FCD34D}
+.sf-hd{display:flex;gap:10px;margin-bottom:12px}
+.sf-ico{width:34px;height:34px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;box-shadow:var(--sh)}
+.sf-title{font-size:13px;font-weight:700;margin-bottom:3px}
+.sf-desc{font-size:11px;color:var(--ink3);line-height:1.6}
+.sf-acts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.sfa{background:#fff;border-radius:10px;padding:10px 12px;border:1px solid var(--bd);cursor:pointer;display:flex;gap:8px;align-items:flex-start;transition:all .15s}
+.sfa:hover{border-color:var(--g);box-shadow:var(--sh)}
+.sfa-ico{font-size:16px;flex-shrink:0}
+.sfa-n{font-size:11px;font-weight:700;color:var(--ink)}
+.sfa-d{font-size:10px;color:var(--ink4);margin-top:2px}
+
+.disc{font-size:10px;color:var(--ink4);line-height:1.6;padding:6px 0 28px}
+
+/* ══════════════════════════════════════
+   WELCOME MODAL
+══════════════════════════════════════ */
+.wm-overlay{position:fixed;inset:0;z-index:800;background:rgba(13,17,23,.65);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center}
+.wm-overlay.hidden{display:none}
+.wm-card{background:#fff;border-radius:20px;padding:36px 40px;width:480px;max-width:90vw;text-align:center;box-shadow:0 24px 64px rgba(0,0,0,.2);animation:slideUp .3s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.wm-icon{font-size:44px;margin-bottom:12px}
+.wm-title{font-size:22px;font-weight:700;color:var(--ink);margin-bottom:8px;letter-spacing:-.3px}
+.wm-sub{font-size:14px;color:var(--ink3);line-height:1.7;margin-bottom:22px}
+.wm-feats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:24px;text-align:left}
+.wm-feat{display:flex;align-items:flex-start;gap:8px;background:var(--bg);border-radius:8px;padding:10px 12px}
+.wm-feat-ico{font-size:15px;flex-shrink:0;margin-top:1px}
+.wm-feat-text b{display:block;font-size:11px;font-weight:700;color:var(--ink);margin-bottom:1px}
+.wm-feat-text span{font-size:10px;color:var(--ink3)}
+.wm-btn-primary{width:100%;background:var(--g);color:#fff;border:none;border-radius:10px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Sora',sans-serif;transition:background .15s;margin-bottom:10px}
+.wm-btn-primary:hover{background:var(--gd)}
+.wm-btn-skip{font-size:12px;color:var(--ink4);cursor:pointer;font-weight:500;background:none;border:none;font-family:'Sora',sans-serif}
+.wm-btn-skip:hover{color:var(--ink)}
+
+/* ══════════════════════════════════════
+   TOUR SYSTEM
+══════════════════════════════════════ */
+.tour-backdrop{position:fixed;inset:0;z-index:500;background:rgba(13,17,23,.72);opacity:0;pointer-events:none;transition:opacity .3s}
+.tour-backdrop.show{opacity:1;pointer-events:auto}
+.tour-spotlight{position:fixed;z-index:501;border-radius:12px;box-shadow:0 0 0 9999px rgba(13,17,23,.72);pointer-events:none;opacity:0;transition:opacity .3s,left .35s,top .35s,width .35s,height .35s;left:-9999px;top:0;width:0;height:0}
+.tour-card{position:fixed;z-index:502;background:#fff;border-radius:14px;padding:22px 24px;width:320px;box-shadow:0 16px 48px rgba(0,0,0,.22);opacity:0;pointer-events:none;transition:opacity .25s;left:-9999px;top:20px}
+.tour-card.show{opacity:1;pointer-events:auto}
+.tour-badge{display:inline-flex;align-items:center;gap:5px;background:var(--gl);color:var(--gd);font-size:10px;font-weight:700;letter-spacing:.05em;padding:3px 10px;border-radius:20px;margin-bottom:10px}
+.tour-dots{display:flex;gap:4px;margin-bottom:10px}
+.tour-dot{width:6px;height:6px;border-radius:50%;background:var(--bd2)}
+.tour-dot.on{background:var(--g);width:20px;border-radius:3px}
+.tour-title{font-size:16px;font-weight:700;color:var(--ink);margin-bottom:8px}
+.tour-desc{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:18px}
+.tour-btns{display:flex;align-items:center;justify-content:space-between}
+.tour-skip{font-size:11px;color:var(--ink4);cursor:pointer;font-weight:500;background:none;border:none;font-family:'Sora',sans-serif}
+.tour-skip:hover{color:var(--ink)}
+.tour-next{background:var(--g);color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Sora',sans-serif;transition:background .15s}
+.tour-next:hover{background:var(--gd)}
+.tour-next.last{background:var(--blue)}
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WNB4QF45SW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WNB4QF45SW');
+</script>
+</head>
+<body>
+
+<!-- WELCOME MODAL -->
+<div class="wm-overlay hidden" id="wmOverlay">
+  <div class="wm-card">
+    <div class="wm-icon">🏦</div>
+    <div class="wm-title">Welcome to RetireWise</div>
+    <div class="wm-sub">India's most transparent retirement withdrawal calculator. Free, no login. Built on FY2025-26 tax rules.</div>
+    <div class="wm-feats">
+      <div class="wm-feat"><div class="wm-feat-ico">📊</div><div class="wm-feat-text"><b>Multi-account</b><span>NPS, EPF, PPF, MF, FD — each taxed correctly</span></div></div>
+      <div class="wm-feat"><div class="wm-feat-ico">🧾</div><div class="wm-feat-text"><b>Accurate tax</b><span>New regime slabs + Sec 87A rebate</span></div></div>
+      <div class="wm-feat"><div class="wm-feat-ico">📈</div><div class="wm-feat-text"><b>Click any bar</b><span>Updates metrics for that exact year</span></div></div>
+      <div class="wm-feat"><div class="wm-feat-ico">🔥</div><div class="wm-feat-text"><b>FIRE mode</b><span>Plan early retirement from age 25</span></div></div>
+    </div>
+    <button class="wm-btn-primary" onclick="startTour()">Take a quick 4-step tour →</button>
+    <button class="wm-btn-skip" onclick="closeWelcome()">Skip — I'll explore on my own</button>
+  </div>
+</div>
+
+<!-- TOUR OVERLAY -->
+<div class="tour-backdrop" id="tourBackdrop"></div>
+<div class="tour-spotlight" id="tourSpotlight"></div>
+<div class="tour-card" id="tourCard">
+  <div class="tour-badge" id="tourBadge"></div>
+  <div class="tour-dots" id="tourDots"></div>
+  <div class="tour-title" id="tourTitle"></div>
+  <div class="tour-desc" id="tourDesc"></div>
+  <div class="tour-btns">
+    <button class="tour-skip" onclick="endTour()">Skip tour</button>
+    <button class="tour-next" id="tourNext" onclick="tourNextStep()">Next</button>
+  </div>
+</div>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div style="display:flex;align-items:center;gap:10px">
+    <a href="index.html" class="logo" style="text-decoration:none;color:var(--ink)">Retire<b>Wise</b><span class="logo-sub">🇮🇳 India</span></a>
+    <nav style="display:flex;align-items:center;gap:2px;margin-left:4px">
+      <a href="index.html" style="font-size:11px;font-weight:600;color:var(--ink3);text-decoration:none;padding:4px 9px;border-radius:6px;transition:all .15s" onmouseover="this.style.background='var(--bg)';this.style.color='var(--ink)'" onmouseout="this.style.background='';this.style.color='var(--ink3)'">🏠 Home</a>
+      <a href="resources.html" style="font-size:11px;font-weight:600;color:var(--ink3);text-decoration:none;padding:4px 9px;border-radius:6px;transition:all .15s" onmouseover="this.style.background='var(--bg)';this.style.color='var(--ink)'" onmouseout="this.style.background='';this.style.color='var(--ink3)'">📚 Resources</a>
+    </nav>
+  </div>
+  <div class="topbar-mid">
+    <span>New Regime FY2025-26</span><span>·</span>
+    <span>NPS · EPF · PPF · MF · FD</span><span>·</span>
+    <span>5 Strategies</span>
+  </div>
+  <div class="topbar-right">
+    <button class="btn-tour" onclick="showWelcomeAndTour()">❓ Tour</button>
+    <div class="fire-btn" id="fireTgl" onclick="toggleFire()">🔥 FIRE Mode</div>
+  </div>
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="layout">
+
+<!-- ════ LEFT SIDEBAR ════ -->
+<div class="left" id="sidebar">
+
+  <div class="sb" id="sb-ages">
+    <div class="sb-hd"><div class="sb-title"><div class="sb-ico">📅</div>Age &amp; Timeline</div></div>
+    <div class="sl-field">
+      <div class="sl-row">
+        <div class="sl-lbl">Current Age <span class="tip" data-tip="Your age today. Corpus compounds from now until retirement age.">ℹ</span></div>
+        <div class="sl-val" id="v-age">35</div>
+      </div>
+      <input type="range" id="sl-age" min="18" max="74" value="35" oninput="onAgeChange()">
+      <div class="sl-hint" id="hint-age">25 years to retirement · corpus will compound</div>
+      <div class="sl-err" id="err-ret">⚠ Retirement age must be greater than current age</div>
+    </div>
+    <div class="sl-field">
+      <div class="sl-row">
+        <div class="sl-lbl" id="lbl-ret">Retirement Age <span class="tip" data-tip="When you stop working. Your corpus compounds until this age, then you start withdrawing.">ℹ</span></div>
+        <div class="sl-val" id="v-ret">60</div>
+      </div>
+      <input type="range" id="sl-ret" min="19" max="75" value="60" oninput="onRetChange()">
+      <div class="sl-hint" id="hint-ret">25 retirement years planned</div>
+    </div>
+    <div class="sl-field">
+      <div class="sl-row">
+        <div class="sl-lbl">Life Expectancy <span class="tip" data-tip="How long your money must last. Plan conservatively — 90-95 is recommended.">ℹ</span></div>
+        <div class="sl-val" id="v-le">85</div>
+      </div>
+      <input type="range" id="sl-le" min="70" max="100" value="85" oninput="sv(this,'v-le','');recalc()">
+      <div class="sl-hint" id="hint-le">Plan for 25 retirement years</div>
+    </div>
+    <div class="sl-field" style="margin-bottom:0">
+      <div class="sl-row">
+        <div class="sl-lbl">Inflation Rate <span class="tip" data-tip="RBI target is 4%. Urban India experiences 4.5–5.5% effective inflation.">ℹ</span></div>
+        <div class="sl-val" id="v-inf">4.5%</div>
+      </div>
+      <input type="range" id="sl-inf" min="2" max="10" step="0.5" value="4.5" oninput="sv(this,'v-inf','%');recalc()">
+      <div class="sl-hint">RBI target: 4% · Urban CPI: 3.0% (Feb 2026) · Long-run avg: 5.5%</div>
+    </div>
+  </div>
+
+  <div class="sb" id="sb-invest">
+    <div class="sb-hd">
+      <div class="sb-title"><div class="sb-ico">💰</div>Your Investments <span class="tip" data-tip="Enter your current balance in each account. Each grows at its own return until retirement age.">ℹ</span></div>
+      <span style="font-size:10px;color:var(--ink4)">Click to expand</span>
+    </div>
+    <div class="acc-list" id="accList"></div>
+  </div>
+
+  <div id="sipNote2" class="sip-note" style="padding:8px 20px;display:none;font-size:11px;background:var(--gl);color:var(--gd)"></div>
+  <div id="accum-phase-note" style="display:none;padding:8px 20px;background:#EFF6FF;border-top:1px solid var(--bd);font-size:11px;color:#1D4ED8;line-height:1.5"></div>
+  <div class="totals">
+    <div><div class="tot-lbl">Corpus Today</div><div class="tot-val" id="tNow">—</div></div>
+    <div><div class="tot-lbl">At Retirement</div><div class="tot-val" id="tRet">—</div></div>
+    <div><div class="tot-lbl">Blended Return</div><div class="tot-val" id="tBlend">—</div></div>
+  </div>
+
+  <!-- sip-section removed: per-account contributions handle this -->
+  <div id="sip-section" style="display:none"><input type="number" id="sip" value="0"></div>
+  <div class="sip-note" id="sipNote" style="padding:0 20px 12px;display:none"></div>
+
+  <div class="sb">
+    <div class="sb-hd"><div class="sb-title"><div class="sb-ico">🏛</div>Other Guaranteed Income <span class="tip" data-tip="Monthly income you will receive regardless of portfolio — EPF pension, family pension, rental income. Added to your monthly withdrawal.">ℹ</span></div></div>
+    <div style="font-size:11px;color:var(--ink3);margin-bottom:8px">EPF pension · annuity · rental · family pension</div>
+    <div class="einp"><div class="epfx">₹ / mo</div><input type="number" id="extra" value="0" placeholder="0" min="0" oninput="recalc()"></div>
+  </div>
+
+  <!-- Already retired banner -->
+  <div id="already-retired-banner" style="display:none;background:var(--bluel);border-left:4px solid var(--blue);padding:12px 20px;font-size:12px;color:#1D4ED8;line-height:1.6"><strong>Already retired mode</strong><br>Accumulation phase skipped. Withdrawal projections start from your current corpus immediately. SIP and contribution fields are hidden.</div>
+
+  <div class="sb" id="sb-strat">
+    <div class="sb-hd"><div class="sb-title"><div class="sb-ico">🎯</div>Withdrawal Strategy <span class="tip" data-tip="How much you take out each year. Click a strategy to see a plain-English explanation and switch the projections.">ℹ</span></div></div>
+    <div class="strat-list" id="stratList"></div>
+  </div>
+
+</div><!-- end left -->
+
+<!-- ════ RIGHT PANEL ════ -->
+<div class="right" id="rightPanel">
+  <div class="ad">📢 Advertisement — Google AdSense 728×90 Leaderboard</div>
+
+  <div class="fire-banner" id="fireBanner">
+    <div class="fbn" id="fbn">—</div>
+    <div><div class="fbt" id="fbt">—</div><div class="fbs" id="fbs">—</div></div>
+  </div>
+
+  <div class="hero">
+    <div class="hc hg" id="hc-mo">
+      <div class="h-lbl">Monthly Income</div>
+      <div class="h-yr" id="h-mo-yr">Year 1</div>
+      <div class="h-val" id="r-mo">—</div>
+      <div class="h-sub">After all taxes</div>
+      <div class="h-tag ok" id="r-mo-tag">—</div>
+    </div>
+    <div class="hc hb" id="hc-yr">
+      <div class="h-lbl">Annual Gross</div>
+      <div class="h-yr" id="h-yr-yr">Year 1</div>
+      <div class="h-val" id="r-yr">—</div>
+      <div class="h-sub">Before tax</div>
+      <div class="h-tag info" id="r-yr-tag">—</div>
+    </div>
+    <div class="hc ho" id="hc-dur">
+      <div class="h-lbl">Balance / Duration</div>
+      <div class="h-yr" id="h-dur-yr">Year 1</div>
+      <div class="h-val" id="r-dur">—</div>
+      <div class="h-sub" id="r-dur-s">—</div>
+      <div class="h-tag ok" id="r-dur-tag">—</div>
+    </div>
+  </div>
+
+  <div class="chart-card" id="chartCard">
+    <div class="cc-top">
+      <div>
+        <div class="cc-title">Portfolio Projection</div>
+        <div class="cc-meta" id="ccMeta">—</div>
+        <div class="cc-hint">👆 Click any bar to update metrics above for that year</div>
+        <div class="cc-grow" id="ccGrow">📈 Growing — your return exceeds withdrawals + inflation</div>
+      </div>
+      <div class="tab-g">
+        <button class="tab on" onclick="swTab('bal',this)">Balance</button>
+        <button class="tab" onclick="swTab('ann',this)">Annual</button>
+        <button class="tab" onclick="swTab('mon',this)">Monthly</button>
+      </div>
+    </div>
+    <div class="chart-wrap"><canvas id="chart"></canvas></div>
+  </div>
+
+  <div class="two-col">
+    <div class="panel" id="breakdownPanel">
+      <div class="panel-title">📊 Portfolio at Retirement</div>
+      <div id="brRows"><div style="font-size:12px;color:var(--ink4);text-align:center;padding:14px">Enter investment balances on the left</div></div>
+    </div>
+    <div class="panel">
+      <div class="tax-toggle-row" onclick="toggleTax()">
+        <div class="tax-toggle-l">
+          <span style="font-size:13px;font-weight:700">🧾 Tax Breakdown</span>
+          <span class="eff-pill eff-ok" id="effPill">Eff. 0%</span>
+        </div>
+        <span class="tax-arr" id="taxArr">▼</span>
+      </div>
+      <div class="tax-sum" id="taxSum">—</div>
+      <div class="tax-body" id="taxBody"></div>
+    </div>
+  </div>
+
+  <div class="sc-card" id="scCard">
+    <div class="panel-title" style="margin-bottom:4px">All Strategies — Monthly Income After Tax</div>
+    <div style="font-size:11px;color:var(--ink4);margin-bottom:2px">Click any row to switch strategy</div>
+    <div class="sc-rows" id="scRows"></div>
+  </div>
+
+  <div id="sfPanel"></div>
+
+  <div class="ad">📢 Advertisement — Google AdSense 300×250</div>
+  <div class="disc">⚠ RetireWise provides educational projections — not financial advice. Tax includes 4% Health &amp; Education Cess and applicable surcharge (10% for income >50L, 15% for >1Cr). Taxable income from NPS annuity and FD is combined before slab is applied. LTCG on Mutual Funds taxed at flat 12.5% separately. NPS modelled as a drawdown account — actual NPS requires 40% mandatory annuity. Consult a SEBI-registered advisor (RIA) before making decisions.</div>
+</div><!-- end right -->
+</div><!-- end layout -->
+
+<script>
+/* ════════════════════════════════════════
+   ACCOUNT DEFINITIONS
+════════════════════════════════════════ */
+var ACCS = [
+  { id:'nps', name:'NPS', color:'#5367FF', taxType:'pt', taxLbl:'60% free',
+    defBal:500000, defRet:10,
+    rethint:'NPS equity ~10-12% · Balanced ~9% · Conservative ~7.5%',
+    contribHint:'employer NPS + voluntary NPS',
+    rules:['60% lump sum fully tax-free (Sec 10(12A))','40% annuity taxed per new regime slab','Sec 87A: income ≤₹12L → zero tax'],
+    fn: function(g){ var lump=g*0.6, ann=g*0.4, t=inSlab(ann), reb=ann<=1200000?t:0; return {net:lump+ann-t+reb, lines:[{l:'60% lump sum (tax-free)',v:lump,pos:true},{l:'40% annuity (taxable)',v:ann},{l:'Tax on annuity (slab)',v:-t,neg:true},{l:'Sec 87A rebate',v:reb,pos:true}]}; }
+  },
+  { id:'epf', name:'EPF', color:'#00C896', taxType:'tf', taxLbl:'Tax-free',
+    defBal:800000, defRet:8.25,
+    rethint:'EPFO declared rate: 8.25% p.a. (FY2025-26 · 3rd consecutive year)',
+    contribHint:'employee + employer share',
+    rules:['100% exempt after 5+ yrs continuous service (Sec 10(12))','EPFO rate: 8.25% p.a. (FY2025-26)'],
+    fn: function(g){ return {net:g, lines:[{l:'EPF withdrawal — Sec 10(12) exempt',v:g,pos:true},{l:'Tax',v:0}]}; }
+  },
+  { id:'ppf', name:'PPF', color:'#7C3AED', taxType:'tf', taxLbl:'EEE — Free',
+    defBal:600000, defRet:7.1,
+    rethint:'Government-declared: 7.1% p.a. (Q1 FY2025-26)',
+    contribHint:'max ₹1.5L/yr = ₹12,500/mo',
+    rules:['EEE — Exempt at investment, growth AND maturity','Rate: 7.1% p.a.'],
+    fn: function(g){ return {net:g, lines:[{l:'PPF maturity — EEE, zero tax',v:g,pos:true},{l:'Tax',v:0}]}; }
+  },
+  { id:'mf', name:'Mutual Funds', color:'#F59E0B', taxType:'pt', taxLbl:'LTCG 12.5%',
+    defBal:2000000, defRet:12,
+    rethint:'Equity: 12-14% · Hybrid: 9-11% · Debt funds: 6-7%',
+    contribHint:'monthly SIP amount',
+    rules:['LTCG @12.5% on equity gains above ₹1.25L/yr','Gains ≤₹1.25L/yr completely exempt','No indexation from FY2025 (Budget 2024)'],
+    fn: function(g){ var gains=g*0.5, ex=Math.min(125000,gains), tax=Math.max(0,gains-125000)*0.125; return {net:g-tax, lines:[{l:'Estimated LTCG gains (~50%)',v:gains},{l:'Annual exemption (₹1.25L)',v:-ex,neg:true},{l:'LTCG tax @12.5%',v:-tax,neg:true}]}; }
+  },
+  { id:'fd', name:'FD / Debt', color:'#EF4444', taxType:'tx', taxLbl:'Taxable',
+    defBal:300000, defRet:7,
+    rethint:'Bank FD: 6.5-7.5% · Senior citizen FD: 7-8%',
+    contribHint:'recurring deposit / monthly FD',
+    rules:['Interest fully taxable per income slab','Senior TDS threshold: ₹50,000/yr','No exemption — least tax-efficient'],
+    fn: function(g){ var t=inSlab(g), reb=g<=1200000?t:0; return {net:g-t+reb, lines:[{l:'FD interest / withdrawal',v:g},{l:'Income tax (new regime slab)',v:-t,neg:true},{l:'Sec 87A rebate (if ≤₹12L)',v:reb,pos:true}]}; }
+  }
+];
+
+function inSlab(g) {
+  if(g<=0) return 0;
+  var bands=[[400000,0],[400000,0.05],[400000,0.10],[400000,0.15],[400000,0.20],[400000,0.25],[Infinity,0.30]];
+  var t=0, r=g;
+  for(var i=0;i<bands.length;i++){ if(r<=0)break; var c=Math.min(r,bands[i][0]); t+=c*bands[i][1]; r-=c; }
+  if(g<=1200000) return 0;
+  if(g>10000000)     t *= 1.15;  // surcharge >1Cr
+  else if(g>5000000) t *= 1.10;  // surcharge >50L
+  return Math.max(0, Math.round(t * 1.04)); // 4% cess
+}
+
+// RMD Uniform Lifetime Table (IRS-based, adapted for India)
+var RMD_TABLE = {
+  18:64.1,19:63.1,20:62.1,21:61.2,22:60.2,23:59.2,24:58.2,25:57.2,26:56.2,27:55.3,
+  28:54.3,29:53.3,30:52.4,31:51.4,32:50.4,33:49.4,34:48.5,35:47.5,36:46.5,37:45.6,
+  38:44.6,39:43.6,40:42.7,41:41.7,42:40.7,43:39.8,44:38.8,45:37.9,46:36.9,47:36.0,
+  48:35.0,49:34.1,50:33.1,51:32.2,52:31.3,53:30.4,54:29.5,55:28.6,56:27.7,57:26.8,
+  58:25.9,59:25.0,60:24.2,61:23.3,62:22.5,63:21.6,64:20.8,65:20.0,66:19.2,67:18.4,
+  68:17.7,69:16.9,70:16.2,71:15.5,72:14.8,73:14.1,74:13.4,75:12.8,76:12.1,77:11.5,
+  78:10.9,79:10.2,80:9.6,81:9.1,82:8.6,83:8.1,84:7.6,85:7.2,86:6.7,87:6.3,88:5.9,89:5.5,90:5.2
+};
+
+var STRATS = [
+  { id:'r4',  name:'4% Rule',         startRate:0.04,  color:'#00C896',
+    tagline:'Fixed + inflation-adjusted yearly',
+    explain:'The safest, most-researched strategy. Withdraw 4% of your retirement corpus in Year 1, then increase that amount by inflation each year regardless of market performance. Based on historical data — 90%+ success over 30 years. Best for conservative retirees who want stable, predictable income.' },
+  { id:'grd', name:'Guardrails',       startRate:0.055, color:'#5367FF',
+    tagline:'Dynamic ±10% income corridor',
+    explain:'Start at 5.5%. Each year: if your withdrawal rate exceeds 6% of current portfolio, CUT income by 10%. If it falls below 4%, RAISE income by 10%. Otherwise inflation-adjust normally. This protects against both running out of money AND underspending. Best for flexible spenders who want higher starting income.' },
+  { id:'c5',  name:'Constant 5%',      startRate:0.05,  color:'#F59E0B',
+    tagline:'5% of current balance — variable income',
+    explain:'Withdraw exactly 5% of your CURRENT portfolio value every year (not the original corpus). In good years you spend more; in bad years you automatically spend less. Your portfolio never technically hits zero. Downside: income fluctuates year-to-year. Best if your expenses are flexible.' },
+  { id:'bkt', name:'Bucket Strategy',  startRate:0.045, color:'#7C3AED',
+    tagline:'3-bucket system: cash + bonds + equity',
+    explain:'Split corpus: Bucket 1 = 2 years expenses in cash (safe, no market risk). Bucket 2 = 25% in bonds/debt funds (~6.5% return). Bucket 3 = remainder in equity (~12% return). Each year: spend from Bucket 1, then refill from Bucket 2, then refill Bucket 2 from Bucket 3. Prevents panic selling in downturns.' },
+  { id:'rmd', name:'RMD Method',       startRate:0.038, color:'#EF4444',
+    tagline:'Age-based divisor — withdrawal rises with age',
+    explain:'Each year: withdrawal = Portfolio ÷ Life Expectancy Factor. At age 60, factor = 24.2 (3.8% rate). At age 70, factor = 16.2 (rising rate). At age 80, factor = 9.6 (higher income in later years). Mirrors IRS RMD rules. Naturally increases income as healthcare needs rise with age.' }
+];
+
+/* ════════════════════════════════════════
+   STATE
+════════════════════════════════════════ */
+var ST = {
+  age:35, ret:60, le:85, inf:4.5, extra:0, sip:0,
+  fire:false, stratIdx:0, tab:'bal',
+  bals:{nps:500000,epf:800000,ppf:600000,mf:2000000,fd:300000},
+  rets:{nps:10,epf:8.25,ppf:7.1,mf:12,fd:7},
+  contribs:{nps:0,epf:0,ppf:0,mf:0,fd:0}
+};
+var chartObj = null;
+var simData = { bals:[], anns:[], mons:[], taxRs:[], totRets:[] };
+var selBar = -1; // -1 = no bar selected initially
+
+/* ════════════════════════════════════════
+   FORMAT HELPERS
+════════════════════════════════════════ */
+function f(n, sh) {
+  if(isNaN(n)||n==null) return '₹0';
+  var a=Math.abs(n);
+  if(sh){ if(a>=10000000) return '₹'+(n/10000000).toFixed(1)+'Cr'; if(a>=100000) return '₹'+(n/100000).toFixed(1)+'L'; if(a>=1000) return '₹'+(n/1000).toFixed(0)+'K'; }
+  else  { if(a>=10000000) return '₹'+(n/10000000).toFixed(2)+'Cr'; if(a>=100000) return '₹'+(n/100000).toFixed(2)+'L'; }
+  return '₹'+Math.round(n).toLocaleString('en-IN');
+}
+function fm(n){ return '₹'+Math.round(n).toLocaleString('en-IN'); }
+
+/* ════════════════════════════════════════
+   SLIDER HELPERS
+════════════════════════════════════════ */
+function sv(el, vid, suf) {
+  document.getElementById(vid).textContent = parseFloat(el.value) + suf;
+  slTrack(el);
+}
+function slTrack(el) {
+  var v=parseFloat(el.value), mn=parseFloat(el.min), mx=parseFloat(el.max);
+  el.style.setProperty('--p', ((v-mn)/(mx-mn)*100)+'%');
+}
+function initSliders(){ document.querySelectorAll('input[type=range]').forEach(slTrack); }
+
+/* ════════════════════════════════════════
+   AGE VALIDATION (hard enforced)
+════════════════════════════════════════ */
+function onAgeChange() {
+  var asl=document.getElementById('sl-age'), rsl=document.getElementById('sl-ret');
+  ST.age = parseInt(asl.value);
+  document.getElementById('v-age').textContent = ST.age;
+  slTrack(asl);
+  rsl.min = ST.age+1;
+  if(ST.ret <= ST.age){ ST.ret=ST.age+1; rsl.value=ST.ret; document.getElementById('v-ret').textContent=ST.ret; }
+  slTrack(rsl);
+  updateHints(); recalc();
+}
+function onRetChange() {
+  var rsl=document.getElementById('sl-ret'), v=parseInt(rsl.value);
+  if(v<=ST.age){
+    document.getElementById('err-ret').classList.add('show');
+    ST.ret=ST.age+1; rsl.value=ST.ret; document.getElementById('v-ret').textContent=ST.ret;
+  } else {
+    document.getElementById('err-ret').classList.remove('show');
+    ST.ret=v; document.getElementById('v-ret').textContent=ST.ret;
+  }
+  slTrack(rsl); updateHints(); recalc();
+}
+function updateHints() {
+  var tr=ST.ret-ST.age, ir=ST.le-ST.ret;
+  var alreadyRetired=(tr<=0);
+
+  // Update hint texts
+  document.getElementById('hint-age').textContent = alreadyRetired ? 'Already retired — withdrawals start immediately' : tr+' years to retirement · corpus will compound';
+  document.getElementById('hint-ret').textContent = alreadyRetired ? 'You are currently retired' : Math.max(0,ir)+' retirement years planned';
+  document.getElementById('hint-le').textContent  = 'Plan for '+Math.max(0,ir)+' retirement years';
+  document.getElementById('lbl-ret').innerHTML = (ST.fire?'🔥 FIRE Target Age':alreadyRetired?'Retirement Age (= current age — already retired)':'Retirement Age')+' <span class="tip" data-tip="Set this equal to your current age if you are already retired. The calculator will skip accumulation and start withdrawals immediately.">ℹ</span>';
+
+  // Show/hide accumulation sections
+  // sip-section hidden permanently (per-account contributions used instead)
+
+  // Show already-retired banner
+  var arBanner=document.getElementById('already-retired-banner');
+  if(arBanner) arBanner.style.display=alreadyRetired?'block':'none';
+
+  // Show/hide contribution wrapper divs without full rebuild
+  ACCS.forEach(function(a){
+    var cw=document.getElementById('contrib-wrap-'+a.id);
+    if(cw) cw.style.display=alreadyRetired?'none':'';
+  });
+}
+
+/* ════════════════════════════════════════
+   BUILD ACCOUNT LIST
+════════════════════════════════════════ */
+function buildAccList() {
+  var toRet = Math.max(0, ST.ret - ST.age);
+  var html = '';
+  ACCS.forEach(function(a, i) {
+    var active = (ST.bals[a.id]||0) > 0;
+    var open   = i === 0; // first card open by default
+    html += '<div class="acc-card'+(active?' active':'')+'" id="ac-'+a.id+'">'
+      +'<div class="acc-head" onclick="toggleAcc(\''+a.id+'\')">'
+      +'<div class="acc-dot" style="background:'+a.color+'"></div>'
+      +'<div class="acc-name">'+a.name+'</div>'
+      +'<div class="acc-badge '+a.taxType+'" title="'+(a.taxType==='tf'?'Tax-free — zero tax on withdrawals':a.taxType==='pt'?'Partially taxable — some portion exempt':'Fully taxable as income')+'">'+a.taxLbl+'</div>'
+      +'<div class="acc-chev'+(open?' open':'')+'" id="ch-'+a.id+'">▼</div>'
+      +'</div>'
+      +'<div class="acc-body'+(open?' open':'')+'" id="ab-'+a.id+'">'
+      +'<div class="acc-inputs">'
+      +'<div><label class="inp-lbl">Current Balance</label>'
+      +'<div class="inp-box"><div class="inp-pfx">₹</div>'
+      +'<input type="number" min="0" value="'+(ST.bals[a.id]||'')+'" placeholder="0" '
+      +'oninput="updBal(\''+a.id+'\',this.value)" onfocus="this.select()"></div></div>'
+      +'<div><label class="inp-lbl">Expected Return</label>'
+      +'<div class="inp-box">'
+      +'<input type="number" min="0" max="25" step="0.5" value="'+(ST.rets[a.id]||a.defRet)+'" '
+      +'oninput="ST.rets[\''+a.id+'\']=parseFloat(this.value)||0;recalc()" onfocus="this.select()">'
+      +'<div class="inp-sfx">% p.a.</div></div></div>'
+      +'</div>'
+      +'<div class="acc-rethint">'+a.rethint+'</div>'
+      +'<div class="acc-rules">'+a.rules.map(function(r){return '<div class="acc-rule">'+r+'</div>';}).join('')+'</div>'
+      +(toRet===0
+        ?'<div style="margin-top:8px;font-size:10px;color:#0369A1;background:#E0F2FE;border-radius:6px;padding:6px 10px">✓ Contribution phase complete — withdrawals have started</div>'
+        :''
+      )
+      +(toRet>0
+        ?'<div style="margin-top:10px"><label class="inp-lbl" style="margin-bottom:5px">Monthly Contribution <span style=\"font-size:9px;background:#E0F2FE;color:#0369A1;border-radius:4px;padding:1px 5px;font-weight:600;text-transform:none;letter-spacing:0\">stops at retirement age '+ST.ret+'</span>'
+        +'<span style="font-size:9px;color:var(--ink4);font-weight:400;text-transform:none;letter-spacing:0;margin-left:4px">'+a.contribHint+'</span></label>'
+        +'<div class="inp-box"><div class="inp-pfx">₹/mo</div>'
+        +'<input type="number" min="0" value="'+(ST.contribs[a.id]||0)+'" placeholder="0" '
+        +'oninput="ST.contribs[\''+a.id+'\'] = parseFloat(this.value)||0;recalc()" onfocus="this.select()"></div>'
+        +'</div>'
+        :'')
+      +'</div></div>';
+  });
+  document.getElementById('accList').innerHTML = html;
+}
+
+function toggleAcc(id) {
+  var body=document.getElementById('ab-'+id), chev=document.getElementById('ch-'+id);
+  body.classList.toggle('open'); chev.classList.toggle('open');
+}
+function updBal(id, val) {
+  ST.bals[id] = parseFloat(val)||0;
+  var card=document.getElementById('ac-'+id);
+  if(card) card.classList.toggle('active', ST.bals[id]>0);
+  recalc();
+}
+
+/* ════════════════════════════════════════
+   BUILD STRATEGY LIST
+════════════════════════════════════════ */
+function buildStratList() {
+  var html = '';
+  STRATS.forEach(function(s, i) {
+    var on = i===ST.stratIdx;
+    html += '<div class="sp'+(on?' on':'')+'" onclick="ST.stratIdx='+i+';buildStratList();recalc()">'
+      +'<div class="sp-dot" style="background:'+s.color+'"></div>'
+      +'<div class="sp-content">'
+      +'<div class="sp-top"><span class="sp-name">'+s.name+'</span><span class="sp-rate">'+(s.startRate*100).toFixed(1)+'%</span></div>'
+      +'<div class="sp-tagline">'+s.tagline+'</div>'
+      +'<div class="sp-explain">'+s.explain+'</div>'
+      +'</div></div>';
+  });
+  document.getElementById('stratList').innerHTML = html;
+}
+
+/* ════════════════════════════════════════
+   WEIGHTED TAX ENGINE
+════════════════════════════════════════ */
+function wtax(accR, totRet, gross){
+  if(!accR.length || totRet === 0) return{net:gross, eff:'0.0', secs:[]};
+
+  // Aggregate ALL taxable income (NPS annuity + FD) then apply slab ONCE
+  // This correctly handles 87A: each source alone may be <12L but combined may not
+  var combinedTaxable = 0, mfTax = 0, perAcc = [];
+
+  accR.forEach(function(a){
+    var por = gross * (a.br / Math.max(totRet, 1));
+    var taxable = 0, lines = [];
+    if(a.id === 'nps'){
+      var lump = por*0.6, ann = por*0.4;
+      taxable = ann; // annuity is regular income
+      lines = [{l:'60% lump sum (tax-free)', v:lump, pos:true},
+               {l:'40% annuity (taxable income)', v:ann}];
+    } else if(a.id === 'epf'){
+      lines = [{l:'EPF withdrawal — Sec 10(12) exempt', v:por, pos:true},
+               {l:'Tax', v:0}];
+    } else if(a.id === 'ppf'){
+      lines = [{l:'PPF maturity — EEE, zero tax', v:por, pos:true},
+               {l:'Tax', v:0}];
+    } else if(a.id === 'mf'){
+      var gains = por*0.5, ex = Math.min(125000, gains);
+      var tax = Math.max(0, gains - 125000) * 0.125;
+      mfTax += tax;
+      lines = [{l:'Estimated LTCG gains (~50%)', v:gains},
+               {l:'Annual exemption (₹1.25L)', v:-ex, neg:true},
+               {l:'LTCG tax @12.5%', v:-tax, neg:true}];
+    } else { // fd
+      taxable = por;
+      lines = [{l:'FD interest / withdrawal', v:por}];
+    }
+    combinedTaxable += taxable;
+    perAcc.push({id:a.id, name:a.name, por:por, taxable:taxable, lines:lines});
+  });
+
+  // Apply slab+cess+surcharge ONCE on combined taxable income
+  var slabTax = inSlab(combinedTaxable);
+
+  // Distribute slab tax proportionally across taxable accounts
+  var secs = perAcc.map(function(d){
+    var myTax = combinedTaxable > 0 ? slabTax*(d.taxable/combinedTaxable) : 0;
+    var ls = d.lines.slice();
+    if(d.taxable > 0 && slabTax > 0){
+      ls.push({l:'Income tax (slab + 4% cess)', v:-myTax, neg:true});
+    }
+    if(d.taxable > 0 && combinedTaxable <= 1200000){
+      ls.push({l:'Sec 87A rebate (combined income ≤₹12L)', v:myTax, pos:true});
+    }
+    return{name:d.name, por:d.por, lines:ls};
+  });
+
+  var totalTax = slabTax + mfTax;
+  return{
+    net: Math.max(0, gross - totalTax),
+    eff: ((totalTax / Math.max(gross,1))*100).toFixed(1),
+    secs: secs
+  };
+}
+
+
+/* ════════════════════════════════════════
+   STATE
+════════════════════════════════════════ */
+var ST = {
+  age:35, ret:60, le:85, inf:4.5, extra:0, sip:0,
+  fire:false, stratIdx:0, tab:'bal',
+  bals:{nps:500000,epf:800000,ppf:600000,mf:2000000,fd:300000},
+  rets:{nps:10,epf:8.25,ppf:7.1,mf:12,fd:7},
+  contribs:{nps:0,epf:0,ppf:0,mf:0,fd:0}
+};
+var chartObj = null;
+var simData = { bals:[], anns:[], mons:[], taxRs:[], totRets:[] };
+var selBar = -1; // -1 = no bar selected initially
+
+/* ════════════════════════════════════════
+   FORMAT HELPERS
+════════════════════════════════════════ */
+function f(n, sh) {
+  if(isNaN(n)||n==null) return '₹0';
+  var a=Math.abs(n);
+  if(sh){ if(a>=10000000) return '₹'+(n/10000000).toFixed(1)+'Cr'; if(a>=100000) return '₹'+(n/100000).toFixed(1)+'L'; if(a>=1000) return '₹'+(n/1000).toFixed(0)+'K'; }
+  else  { if(a>=10000000) return '₹'+(n/10000000).toFixed(2)+'Cr'; if(a>=100000) return '₹'+(n/100000).toFixed(2)+'L'; }
+  return '₹'+Math.round(n).toLocaleString('en-IN');
+}
+function fm(n){ return '₹'+Math.round(n).toLocaleString('en-IN'); }
+
+/* ════════════════════════════════════════
+   SLIDER HELPERS
+════════════════════════════════════════ */
+function sv(el, vid, suf) {
+  document.getElementById(vid).textContent = parseFloat(el.value) + suf;
+  slTrack(el);
+}
+function slTrack(el) {
+  var v=parseFloat(el.value), mn=parseFloat(el.min), mx=parseFloat(el.max);
+  el.style.setProperty('--p', ((v-mn)/(mx-mn)*100)+'%');
+}
+function initSliders(){ document.querySelectorAll('input[type=range]').forEach(slTrack); }
+
+/* ════════════════════════════════════════
+   AGE VALIDATION (hard enforced)
+════════════════════════════════════════ */
+function onAgeChange() {
+  var asl=document.getElementById('sl-age'), rsl=document.getElementById('sl-ret');
+  ST.age = parseInt(asl.value);
+  document.getElementById('v-age').textContent = ST.age;
+  slTrack(asl);
+  rsl.min = ST.age+1;
+  if(ST.ret <= ST.age){ ST.ret=ST.age+1; rsl.value=ST.ret; document.getElementById('v-ret').textContent=ST.ret; }
+  slTrack(rsl);
+  updateHints(); recalc();
+}
+function onRetChange() {
+  var rsl=document.getElementById('sl-ret'), v=parseInt(rsl.value);
+  if(v<=ST.age){
+    document.getElementById('err-ret').classList.add('show');
+    ST.ret=ST.age+1; rsl.value=ST.ret; document.getElementById('v-ret').textContent=ST.ret;
+  } else {
+    document.getElementById('err-ret').classList.remove('show');
+    ST.ret=v; document.getElementById('v-ret').textContent=ST.ret;
+  }
+  slTrack(rsl); updateHints(); recalc();
+}
+function updateHints() {
+  var tr=ST.ret-ST.age, ir=ST.le-ST.ret;
+  var alreadyRetired=(tr<=0);
+
+  // Update hint texts
+  document.getElementById('hint-age').textContent = alreadyRetired ? 'Already retired — withdrawals start immediately' : tr+' years to retirement · corpus will compound';
+  document.getElementById('hint-ret').textContent = alreadyRetired ? 'You are currently retired' : Math.max(0,ir)+' retirement years planned';
+  document.getElementById('hint-le').textContent  = 'Plan for '+Math.max(0,ir)+' retirement years';
+  document.getElementById('lbl-ret').innerHTML = (ST.fire?'🔥 FIRE Target Age':alreadyRetired?'Retirement Age (= current age — already retired)':'Retirement Age')+' <span class="tip" data-tip="Set this equal to your current age if you are already retired. The calculator will skip accumulation and start withdrawals immediately.">ℹ</span>';
+
+  // Show/hide accumulation sections
+  // sip-section hidden permanently (per-account contributions used instead)
+
+  // Show already-retired banner
+  var arBanner=document.getElementById('already-retired-banner');
+  if(arBanner) arBanner.style.display=alreadyRetired?'block':'none';
+
+  // Show/hide contribution wrapper divs without full rebuild
+  ACCS.forEach(function(a){
+    var cw=document.getElementById('contrib-wrap-'+a.id);
+    if(cw) cw.style.display=alreadyRetired?'none':'';
+  });
+}
+
+/* ════════════════════════════════════════
+   BUILD ACCOUNT LIST
+════════════════════════════════════════ */
+function buildAccList() {
+  var toRet = Math.max(0, ST.ret - ST.age);
+  var html = '';
+  ACCS.forEach(function(a, i) {
+    var active = (ST.bals[a.id]||0) > 0;
+    var open   = i === 0; // first card open by default
+    html += '<div class="acc-card'+(active?' active':'')+'" id="ac-'+a.id+'">'
+      +'<div class="acc-head" onclick="toggleAcc(\''+a.id+'\')">'
+      +'<div class="acc-dot" style="background:'+a.color+'"></div>'
+      +'<div class="acc-name">'+a.name+'</div>'
+      +'<div class="acc-badge '+a.taxType+'">'+a.taxLbl+'</div>'
+      +'<div class="acc-chev'+(open?' open':'')+'" id="ch-'+a.id+'">▼</div>'
+      +'</div>'
+      +'<div class="acc-body'+(open?' open':'')+'" id="ab-'+a.id+'">'
+      +'<div class="acc-inputs">'
+      +'<div><label class="inp-lbl">Current Balance</label>'
+      +'<div class="inp-box"><div class="inp-pfx">₹</div>'
+      +'<input type="number" min="0" value="'+(ST.bals[a.id]||'')+'" placeholder="0" '
+      +'oninput="updBal(\''+a.id+'\',this.value)" onfocus="this.select()"></div></div>'
+      +'<div><label class="inp-lbl">Expected Return</label>'
+      +'<div class="inp-box">'
+      +'<input type="number" min="0" max="25" step="0.5" value="'+(ST.rets[a.id]||a.defRet)+'" '
+      +'oninput="ST.rets[\''+a.id+'\']=parseFloat(this.value)||0;recalc()" onfocus="this.select()">'
+      +'<div class="inp-sfx">% p.a.</div></div></div>'
+      +'</div>'
+      +'<div class="acc-rethint">'+a.rethint+'</div>'
+      +'<div class="acc-rules">'+a.rules.map(function(r){return '<div class="acc-rule">'+r+'</div>';}).join('')+'</div>'
+      +(toRet===0
+        ?'<div style="margin-top:8px;font-size:10px;color:#0369A1;background:#E0F2FE;border-radius:6px;padding:6px 10px">✓ Contribution phase complete — withdrawals have started</div>'
+        :''
+      )
+      +(toRet>0
+        ?'<div style="margin-top:10px"><label class="inp-lbl" style="margin-bottom:5px">Monthly Contribution <span style=\"font-size:9px;background:#E0F2FE;color:#0369A1;border-radius:4px;padding:1px 5px;font-weight:600;text-transform:none;letter-spacing:0\">stops at retirement age '+ST.ret+'</span>'
+        +'<span style="font-size:9px;color:var(--ink4);font-weight:400;text-transform:none;letter-spacing:0;margin-left:4px">'+a.contribHint+'</span></label>'
+        +'<div class="inp-box"><div class="inp-pfx">₹/mo</div>'
+        +'<input type="number" min="0" value="'+(ST.contribs[a.id]||0)+'" placeholder="0" '
+        +'oninput="ST.contribs[\''+a.id+'\'] = parseFloat(this.value)||0;recalc()" onfocus="this.select()"></div>'
+        +'</div>'
+        :'')
+      +'</div></div>';
+  });
+  document.getElementById('accList').innerHTML = html;
+}
+
+function toggleAcc(id) {
+  var body=document.getElementById('ab-'+id), chev=document.getElementById('ch-'+id);
+  body.classList.toggle('open'); chev.classList.toggle('open');
+}
+function updBal(id, val) {
+  ST.bals[id] = parseFloat(val)||0;
+  var card=document.getElementById('ac-'+id);
+  if(card) card.classList.toggle('active', ST.bals[id]>0);
+  recalc();
+}
+
+/* ════════════════════════════════════════
+   BUILD STRATEGY LIST
+════════════════════════════════════════ */
+function buildStratList() {
+  var html = '';
+  STRATS.forEach(function(s, i) {
+    var on = i===ST.stratIdx;
+    html += '<div class="sp'+(on?' on':'')+'" onclick="ST.stratIdx='+i+';buildStratList();recalc()">'
+      +'<div class="sp-dot" style="background:'+s.color+'"></div>'
+      +'<div class="sp-content">'
+      +'<div class="sp-top"><span class="sp-name">'+s.name+'</span><span class="sp-rate">'+(s.startRate*100).toFixed(1)+'%</span></div>'
+      +'<div class="sp-tagline">'+s.tagline+'</div>'
+      +'<div class="sp-explain">'+s.explain+'</div>'
+      +'</div></div>';
+  });
+  document.getElementById('stratList').innerHTML = html;
+}
+
+/* ════════════════════════════════════════
+   WEIGHTED TAX ENGINE
+════════════════════════════════════════ */
+function wtax(accR, totRet, gross) {
+  if(!accR.length || totRet===0) {
+    var tx0=ACCS[0].fn(gross);
+    return {net:tx0.net, eff:((gross-tx0.net)/Math.max(gross,1)*100).toFixed(1), secs:[{name:ACCS[0].name,por:gross,lines:tx0.lines}]};
+  }
+  var tnet=0, secs=[];
+  accR.forEach(function(a){
+    var por=gross*(a.br/totRet), tx=a.fn(por);
+    tnet+=tx.net;
+    secs.push({name:a.name,por:por,lines:tx.lines});
+  });
+  return {net:tnet, eff:((gross-tnet)/Math.max(gross,1)*100).toFixed(1), secs:secs};
+}
+
+/* ════════════════════════════════════════
+   CORE CALCULATION
+════════════════════════════════════════ */
+function recalc() {
+  ST.extra = parseFloat(document.getElementById('extra').value)||0;
+  ST.sip   = parseFloat(document.getElementById('sip').value)||0;
+  ST.inf   = parseFloat(document.getElementById('sl-inf').value);
+  ST.le    = parseInt(document.getElementById('sl-le').value);
+
+  var toRet = Math.max(0, ST.ret-ST.age);
+  var years  = Math.max(1, ST.le-ST.ret);
+  var str    = STRATS[ST.stratIdx];
+  var inf    = ST.inf/100;
+
+  // Per-account corpus at retirement
+  var totNow=0, totRet=0, accR=[];
+  var tempBlend=0, tempCount=0;
+  ACCS.forEach(function(a){
+    var bal=ST.bals[a.id]||0, r=(ST.rets[a.id]||a.defRet)/100;
+    var atRet=bal*Math.pow(1+r,toRet);
+    totNow+=bal; totRet+=atRet;
+    if(bal>0){ accR.push({id:a.id,name:a.name,color:a.color,taxType:a.taxType,fn:a.fn,bn:bal,br:atRet,r:r}); tempBlend+=r*100; tempCount++; }
+  });
+
+  // Per-account contribution future values (each at own return rate)
+  var totalContribFV=0, contribDetails=[];
+  // Track per-account contribution FV to add back to a.br later
+  var contribFVbyAcc={nps:0,epf:0,ppf:0,mf:0,fd:0};
+  if(toRet>0){
+    ACCS.forEach(function(a){
+      var contrib=ST.contribs[a.id]||0;
+      if(contrib>0){
+        var r=(ST.rets[a.id]||a.defRet)/100, mr=r/12, months=toRet*12;
+        var fv=mr>0 ? contrib*((Math.pow(1+mr,months)-1)/mr)*(1+mr) : contrib*months;
+        totalContribFV+=fv;
+        totRet+=fv;
+        contribFVbyAcc[a.id]=(contribFVbyAcc[a.id]||0)+fv;
+        contribDetails.push(a.name+': ₹'+contrib.toLocaleString('en-IN')+'/mo → +'+f(Math.round(fv),true));
+      }
+    });
+    // Legacy SIP field: distribute proportionally across active accounts
+    var sipAmt=parseFloat(document.getElementById('sip').value)||0;
+    if(sipAmt>0){
+      var sipR=(tempCount>0?tempBlend/tempCount:10)/100, sipMr=sipR/12, sipMonths=toRet*12;
+      var sipFV=sipMr>0?sipAmt*((Math.pow(1+sipMr,sipMonths)-1)/sipMr)*(1+sipMr):sipAmt*sipMonths;
+      totalContribFV+=sipFV; totRet+=sipFV;
+      // Distribute SIP FV proportionally to active accounts
+      if(accR.length>0){
+        var totActBr=accR.reduce(function(s,a){return s+a.br;},0);
+        accR.forEach(function(a){ contribFVbyAcc[a.id]=(contribFVbyAcc[a.id]||0)+sipFV*(a.br/Math.max(totActBr,1)); });
+      }
+      contribDetails.push('Additional SIP: ₹'+sipAmt.toLocaleString('en-IN')+'/mo → +'+f(Math.round(sipFV),true));
+    }
+  }
+
+  // CRITICAL: Add contribution FV back into each account's br so
+  // sum(a.br) = totRet → wtax proportions are correct
+  accR.forEach(function(a){
+    if(contribFVbyAcc[a.id]>0){
+      a.br += contribFVbyAcc[a.id];
+    }
+  });
+  var sipNoteEl=document.getElementById('sipNote');
+  var sipNote2=document.getElementById('sipNote2');
+  var accumNote=document.getElementById('accum-phase-note');
+  if(contribDetails.length>0 && toRet>0){
+    if(sipNoteEl) sipNoteEl.style.display='none';
+    if(sipNote2){ sipNote2.style.display='block'; sipNote2.textContent='Contributions add '+f(Math.round(totalContribFV))+' at retirement · '+contribDetails.join(' · '); }
+    if(accumNote){ accumNote.style.display='block'; accumNote.innerHTML='📅 <strong>Accumulation phase: age '+ST.age+' → '+ST.ret+'</strong> ('+toRet+' years). All contributions stop at retirement — only withdrawals after age '+ST.ret+'.'; }
+  } else {
+    if(sipNoteEl) sipNoteEl.style.display='none';
+    if(sipNote2) sipNote2.style.display='none';
+    if(accumNote){ 
+      if(toRet===0){ accumNote.style.display='block'; accumNote.innerHTML='🏖️ <strong>Already retired</strong> — no accumulation phase. Contribution fields are hidden. Withdrawals start from your current corpus immediately.'; }
+      else { accumNote.style.display='none'; }
+    }
+  }
+
+  // Blended return
+  var blend = accR.length>0 ? accR.reduce(function(s,a){return s+a.r*(a.br/Math.max(totRet,1));},0) : 0.08;
+
+  // Update totals bar
+  document.getElementById('tNow').textContent   = f(totNow);
+  document.getElementById('tRet').textContent   = f(totRet);
+  document.getElementById('tBlend').textContent = (blend*100).toFixed(1)+'%';
+
+  if(totRet===0){ ['r-mo','r-yr','r-dur'].forEach(function(id){document.getElementById(id).textContent='₹0';}); return; }
+
+  // ── Simulate using correct per-strategy logic ──
+  var bals=[Math.round(totRet)], anns=[], mons=[], taxRs=[];
+  var depYear=years, growing=false;
+
+  if(str.id==='r4'){
+    // 4% Rule: fixed start, inflation-adjusted each year
+    var bal4=totRet, aw4=totRet*0.04;
+    var txY1=wtax(accR,totRet,aw4);
+    anns.push(Math.round(aw4)); mons.push(Math.round(txY1.net/12+ST.extra)); taxRs.push(parseFloat(txY1.eff));
+    for(var y=1;y<=years;y++){
+      bal4=bal4*(1+blend)-aw4;
+      if(bal4>bals[y-1]&&bal4>0)growing=true;
+      if(bal4<=0){if(depYear===years)depYear=y;bal4=0;}
+      bals.push(Math.round(Math.max(0,bal4)));
+      aw4*=(1+inf);
+      var txy=wtax(accR,totRet,aw4);
+      anns.push(Math.round(aw4)); mons.push(Math.round(txy.net/12+ST.extra)); taxRs.push(parseFloat(txy.eff));
+    }
+
+  } else if(str.id==='grd'){
+    // Guardrails: start 5.5%, cut 10% if rate>6%, raise 10% if rate<4%, else inflation-adjust
+    var balG=totRet, awG=totRet*0.055;
+    var txG1=wtax(accR,totRet,awG);
+    anns.push(Math.round(awG)); mons.push(Math.round(txG1.net/12+ST.extra)); taxRs.push(parseFloat(txG1.eff));
+    for(var y=1;y<=years;y++){
+      balG=balG*(1+blend)-awG;
+      if(balG>bals[y-1]&&balG>0)growing=true;
+      if(balG<=0){if(depYear===years)depYear=y;balG=0;}
+      bals.push(Math.round(Math.max(0,balG)));
+      if(balG>0){
+        var rate=awG/balG;
+        if(rate>0.06) awG*=0.90;
+        else if(rate<0.04) awG*=1.10;
+        else awG*=(1+inf);
+      }
+      var txyG=wtax(accR,totRet,awG);
+      anns.push(Math.round(awG)); mons.push(Math.round(txyG.net/12+ST.extra)); taxRs.push(parseFloat(txyG.eff));
+    }
+
+  } else if(str.id==='c5'){
+    // Constant 5%: withdraw 5% of CURRENT balance each year (variable income)
+    var balC=totRet;
+    var drawC=balC*0.05;
+    var txC1=wtax(accR,totRet,drawC);
+    anns.push(Math.round(drawC)); mons.push(Math.round(txC1.net/12+ST.extra)); taxRs.push(parseFloat(txC1.eff));
+    for(var y=1;y<=years;y++){
+      balC=balC*(1+blend)-drawC;
+      if(balC>bals[y-1]&&balC>0)growing=true;
+      if(balC<=0){if(depYear===years)depYear=y;balC=0;}
+      bals.push(Math.round(Math.max(0,balC)));
+      drawC=Math.max(balC,0)*0.05; // 5% of NEW current balance
+      var txyC=wtax(accR,totRet,drawC);
+      anns.push(Math.round(drawC)); mons.push(Math.round(txyC.net/12+ST.extra)); taxRs.push(parseFloat(txyC.eff));
+    }
+
+  } else if(str.id==='bkt'){
+    // Bucket Strategy: B1=2yr cash, B2=25% bonds (~6.5%), B3=rest equity (~12%)
+    var annExp=totRet*0.045;
+    var b1=annExp*2, b2=totRet*0.25, b3=totRet-b1-b2;
+    var b2r=0.065, b3r=Math.min(blend*1.4,0.15); // equity ~40% above blended, max 15%
+    var txB1=wtax(accR,totRet,annExp);
+    anns.push(Math.round(annExp)); mons.push(Math.round(txB1.net/12+ST.extra)); taxRs.push(parseFloat(txB1.eff));
+    for(var y=1;y<=years;y++){
+      b1-=annExp;
+      b2*=(1+b2r); b3*=(1+b3r);
+      // Refill B1 from B2 if B1 < 1yr expenses
+      if(b1<annExp && b2>annExp){b2-=annExp;b1+=annExp;}
+      // Refill B2 from B3 if B2 < 2yr expenses
+      if(b2<annExp*2 && b3>annExp*3){var refill=annExp*2;b3-=refill;b2+=refill;}
+      annExp*=(1+inf);
+      var total=Math.max(0,b1)+Math.max(0,b2)+Math.max(0,b3);
+      var prevTot=bals[y-1];
+      if(total>prevTot&&total>0)growing=true;
+      if(total<=0&&depYear===years)depYear=y;
+      bals.push(Math.round(total));
+      var txyB=wtax(accR,totRet,annExp);
+      anns.push(Math.round(annExp)); mons.push(Math.round(txyB.net/12+ST.extra)); taxRs.push(parseFloat(txyB.eff));
+    }
+
+  } else {
+    // RMD Method: withdrawal = balance / life-expectancy factor by age
+    var balR=totRet;
+    var age0=ST.ret, f0=RMD_TABLE[age0]||(Math.max(1.0,5.2-(age0-90)*0.4));
+    var draw0=balR/f0;
+    var txR1=wtax(accR,totRet,draw0);
+    anns.push(Math.round(draw0)); mons.push(Math.round(txR1.net/12+ST.extra)); taxRs.push(parseFloat(txR1.eff));
+    for(var y=1;y<=years;y++){
+      balR=balR*(1+blend)-draw0;
+      if(balR>bals[y-1]&&balR>0)growing=true;
+      if(balR<=0){if(depYear===years)depYear=y;balR=0;}
+      bals.push(Math.round(Math.max(0,balR)));
+      var ageY=ST.ret+y;
+      var factorY=RMD_TABLE[ageY]||(Math.max(1.0,5.2-(ageY-90)*0.4));
+      draw0=Math.max(balR,0)/factorY;
+      var txyR=wtax(accR,totRet,draw0);
+      anns.push(Math.round(draw0)); mons.push(Math.round(txyR.net/12+ST.extra)); taxRs.push(parseFloat(txyR.eff));
+    }
+  }
+
+  // Year 1 values (index 0 in anns/mons arrays)
+  var gY1=anns[0]||0, txY1={net:(mons[0]||0)-ST.extra, eff:taxRs[0]||'0.0'}, moY1=mons[0]||0;
+  simData = {bals:bals,anns:anns,mons:mons,taxRs:taxRs,totRets:bals,accR:accR,totRet:totRet,depYear:depYear,years:years,blend:blend,growing:growing};
+
+  // FIRE / Already-retired banner
+  var fb=document.getElementById('fireBanner');
+  var alreadyRetired=(toRet<=0);
+  if(alreadyRetired){
+    fb.classList.add('show');
+    document.getElementById('fbn').textContent='🏖️ Retired';
+    document.getElementById('fbt').textContent='Already retired — withdrawals start from your current corpus';
+    document.getElementById('fbs').textContent='Corpus: '+f(totRet)+' · Blended return: '+(blend*100).toFixed(1)+'% · '+(years)+' years to age '+ST.le;
+  } else if(ST.fire&&toRet>0){
+    fb.classList.add('show');
+    document.getElementById('fbn').textContent='🔥 '+toRet+' yrs';
+    document.getElementById('fbt').textContent='To Financial Independence';
+    document.getElementById('fbs').textContent='FIRE age: '+ST.ret+' · Corpus: '+f(totRet)+' · Return: '+(blend*100).toFixed(1)+'%';
+  } else fb.classList.remove('show');
+
+  // Show Year 1 values by default but don't highlight any bar
+  selBar=-1;
+  updateDisplay(0); // show Year 1 data in hero cards
+
+  // Chart
+  renderChart();
+
+  // Breakdown
+  renderBreakdown(accR, totRet);
+
+  // Strategy compare
+  renderStratCompare(accR, totRet);
+
+  // Shortfall
+  renderShortfall(depYear, years, totRet, blend, str);
+}
+
+/* ════════════════════════════════════════
+   UPDATE HERO + TAX FOR SELECTED BAR
+════════════════════════════════════════ */
+function updateDisplay(idx) {
+  // selBar is only updated by bar clicks, not by recalc init
+  if(selBar>=0) selBar=idx;
+  var age=ST.ret+idx;
+  var bal=simData.bals[idx]||0;
+  var ann=simData.anns[idx]||0;
+  var mon=simData.mons[idx]||0;
+  var taxR=simData.taxRs[idx]||0;
+  var isY1=idx===0;
+  var lbl=isY1?'Year 1':'Age '+age;
+
+  // Hero year labels
+  document.getElementById('h-mo-yr').textContent  = lbl;
+  document.getElementById('h-yr-yr').textContent  = lbl;
+  document.getElementById('h-dur-yr').textContent = lbl;
+
+  // Hero values
+  document.getElementById('r-mo').textContent    = fm(Math.round(mon));
+  document.getElementById('r-mo-tag').textContent = STRATS[ST.stratIdx].name+' · Tax '+taxR+'%';
+  document.getElementById('r-yr').textContent    = f(Math.round(ann));
+  document.getElementById('r-yr-tag').textContent = f(simData.totRet,true)+' corpus';
+  document.getElementById('r-dur').textContent   = bal>0 ? f(bal,true) : 'Depleted';
+  document.getElementById('r-dur-s').textContent  = bal>0 ? 'Balance at '+lbl : 'Portfolio ended';
+  var dtag=document.getElementById('r-dur-tag');
+  dtag.textContent=bal<=0?'Depleted':isY1?'Fully funded':'Remaining';
+  dtag.className='h-tag '+(bal<=0?'bad':'ok');
+
+  // Highlight selected card
+  ['hc-mo','hc-yr','hc-dur'].forEach(function(id){
+    document.getElementById(id).classList.remove('selected');
+  });
+
+  // Chart subtitle
+  document.getElementById('ccMeta').textContent = 'Showing '+lbl+' · '+f(simData.totRet)+' corpus · '+(simData.blend*100).toFixed(1)+'% blended return · '+STRATS[ST.stratIdx].name;
+  document.getElementById('ccGrow').classList.toggle('show', simData.growing && ST.tab==='bal' && isY1);
+
+  // Tax breakdown for this year
+  // Recalculate tax for the annual withdrawal at this year
+  var txYear = wtax(simData.accR, simData.totRet, ann); // always use original totRet for proportions
+  var ep=document.getElementById('effPill');
+  ep.textContent='Eff. '+txYear.eff+'% · '+lbl;
+  ep.className='eff-pill '+(parseFloat(txYear.eff)>3?'eff-warn':'eff-ok');
+  var saved=Math.round(ann-txYear.net);
+  document.getElementById('taxSum').textContent = saved<=0
+    ? '✅ Zero tax — all accounts exempt (87A / EEE)'
+    : '₹'+Math.round(saved/12).toLocaleString('en-IN')+'/mo in taxes · '+lbl+' · click ▼ to expand';
+
+  var txHtml='';
+  txYear.secs.forEach(function(sec){
+    txHtml+='<div class="tax-sec"><div class="tax-sec-hd">'+sec.name+' ('+f(sec.por)+')</div>';
+    sec.lines.forEach(function(l){
+      txHtml+='<div class="tr"><div class="trl">'+l.l+'</div>'
+        +'<div class="trv '+(l.neg?'neg':l.pos?'pos':'')+'">'+( l.neg?'-':'')+f(Math.abs(l.v))+'</div></div>';
+    });
+    txHtml+='</div>';
+  });
+  txHtml+='<div class="tax-grand"><div class="tgl">Net monthly ('+lbl+')</div><div class="tgv">'+fm(Math.round(mon))+'/mo</div></div>';
+  txHtml+='<div class="tr" style="margin-top:8px"><div class="trl">Effective tax rate ('+lbl+')</div><div class="trv">'+txYear.eff+'%</div></div>';
+  txHtml+='<div class="tax-note">ℹ Withdrawal grows with inflation each year. Tax recalculated for each year shown. Each account taxed independently.</div>';
+  document.getElementById('taxBody').innerHTML=txHtml;
+}
+
+/* ════════════════════════════════════════
+   BAR CHART
+════════════════════════════════════════ */
+function renderChart() {
+  var str=STRATS[ST.stratIdx];
+  var labels=simData.bals.map(function(_,i){return 'Age '+(ST.ret+i);});
+  var data, col;
+  if(ST.tab==='bal')     {data=simData.bals;col=str.color;}
+  else if(ST.tab==='ann'){data=simData.anns;col='#3B82F6';}
+  else                   {data=simData.mons;col='#F59E0B';}
+
+  // If selBar=-1 (no selection), all bars same opacity  
+  var bgColors=data.map(function(_,i){return (selBar<0||i===selBar)?col:col+'55';});
+  var bdColors=data.map(function(_,i){return (selBar<0||i===selBar)?col:col+'33';});
+
+  if(chartObj) chartObj.destroy();
+  var ctx=document.getElementById('chart').getContext('2d');
+  chartObj=new Chart(ctx,{
+    type:'bar',
+    data:{labels:labels,datasets:[{data:data,backgroundColor:bgColors,borderColor:bdColors,borderWidth:1.5,borderRadius:4,borderSkipped:false}]},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      onClick:function(evt,elements){
+        if(elements&&elements.length>0){
+          selBar=elements[0].index;
+          updateDisplay(elements[0].index);
+          renderChart();
+        }
+      },
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          callbacks:{
+            title:function(items){return 'Age '+(ST.ret+items[0].dataIndex);},
+            label:function(item){
+              var idx=item.dataIndex;
+              return ['Balance: '+f(simData.bals[idx]),'Monthly: '+fm(simData.mons[idx]),'Tax: '+simData.taxRs[idx]+'%'];
+            }
+          },
+          backgroundColor:'#0D1117',titleColor:'#00C896',bodyColor:'rgba(255,255,255,.8)',
+          padding:10,cornerRadius:8,displayColors:false
+        }
+      },
+      scales:{
+        y:{ticks:{callback:function(v){return f(v,true);},font:{size:10,family:'DM Mono'},color:'#9CA3AF'},grid:{color:'#F3F4F6'}},
+        x:{ticks:{font:{size:9,family:'Sora'},color:'#9CA3AF',maxTicksLimit:14},grid:{display:false}}
+      },
+      animation:{duration:300}
+    }
+  });
+}
+
+function swTab(t,el){
+  ST.tab=t;
+  document.querySelectorAll('.tab').forEach(function(b){b.classList.remove('on');});
+  el.classList.add('on');
+  renderChart();
+}
+
+/* ════════════════════════════════════════
+   BREAKDOWN
+════════════════════════════════════════ */
+function renderBreakdown(accR, totRet) {
+  if(!accR.length){
+    document.getElementById('brRows').innerHTML='<div style="font-size:12px;color:var(--ink4);text-align:center;padding:14px">Enter investment balances on the left</div>';
+    return;
+  }
+  var html='';
+  accR.forEach(function(a){
+    var pct=Math.round(a.br/totRet*100);
+    var txp=a.fn(100000), taxAmt=100000-txp.net;
+    var cls=a.taxType==='tf'?'ok':a.taxType==='pt'?'warn':'bad';
+    var taxStr=taxAmt<50?'Tax-free':f(taxAmt,true)+' per ₹1L';
+    html+='<div class="br-item">'
+      +'<div class="br-top"><div class="br-name"><div class="acc-dot" style="background:'+a.color+'"></div>'+a.name+'</div><div class="br-pct">'+pct+'%</div></div>'
+      +'<div class="br-track"><div class="br-fill" style="width:'+pct+'%;background:'+a.color+'">'+f(a.br,true)+'</div></div>'
+      +'<div class="br-sub"><span>'+f(a.bn)+' → <strong>'+f(a.br)+'</strong></span><span class="br-badge '+cls+'">'+taxStr+'</span></div>'
+      +'</div>';
+  });
+  document.getElementById('brRows').innerHTML=html;
+}
+
+/* ════════════════════════════════════════
+   STRATEGY COMPARE
+════════════════════════════════════════ */
+function renderStratCompare(accR, totRet) {
+  var allM=STRATS.map(function(s){
+    var g,net;
+    if(s.id==='r4')  { g=totRet*0.04; }
+    else if(s.id==='grd') { g=totRet*0.055; }
+    else if(s.id==='c5')  { g=totRet*0.05; }
+    else if(s.id==='bkt') { g=totRet*0.045; }
+    else { // rmd
+      var age=ST.ret, factor=RMD_TABLE[age]||(Math.max(1.0,5.2-(age-90)*0.4));
+      g=totRet/factor;
+    }
+    var tx=wtax(accR,totRet,g);
+    return {mo:Math.round(tx.net/12+ST.extra), yr:Math.round(g)};
+  });
+  var maxMo=Math.max.apply(null,allM.map(function(d){return d.mo;}));
+  var html='';
+  STRATS.forEach(function(s,i){
+    var pct=Math.round(allM[i].mo/Math.max(maxMo,1)*100);
+    html+='<div class="sc-row'+(i===ST.stratIdx?' on':'')+'" onclick="ST.stratIdx='+i+';buildStratList();recalc()">'
+      +'<div class="sc-n">'+s.name+(i===ST.stratIdx?' ✓':'')+'</div>'
+      +'<div class="sc-track"><div class="sc-fill" style="width:'+pct+'%;background:'+s.color+'">'+fm(allM[i].mo)+'/mo</div></div>'
+      +'<div class="sc-yr">'+f(allM[i].yr,true)+'/yr</div>'
+      +'</div>';
+  });
+  document.getElementById('scRows').innerHTML=html;
+}
+
+/* ════════════════════════════════════════
+   SHORTFALL PANEL
+════════════════════════════════════════ */
+function renderShortfall(depYear, years, totRet, blend, str) {
+  var dep=depYear<years;
+  var sfActs=dep?[
+    {ico:'📈',n:'Increase SIP now',d:'Add ₹5K/mo → longer runway'},
+    {ico:'🛡️',n:'Buy annuity plan',d:'Guaranteed lifetime income'},
+    {ico:'🔄',n:'Switch to 4% Rule',d:'Most conservative strategy'},
+  ]:[
+    {ico:'🎯',n:'Optimise withdrawals',d:'You may afford a higher rate'},
+    {ico:'💰',n:'Legacy planning',d:'Pass surplus to family'},
+    {ico:'📄',n:'Download PDF report',d:'Share with your advisor'},
+  ];
+  var cls=dep?'sf-danger':ST.fire?'sf-fire':'sf-safe';
+  var ico=dep?'⚠️':ST.fire?'🔥':'✅';
+  var title=dep
+    ?'Shortfall — corpus depletes '+( years-depYear)+' years early (age '+(ST.ret+depYear)+')'
+    :ST.fire?'🔥 FIRE on track — retire at '+ST.ret+' with '+f(totRet)+' corpus'
+    :'Fully funded — corpus sustains through age '+ST.le+'+';
+  var desc=dep
+    ?str.name+' at '+(str.startRate*100).toFixed(1)+'% from '+f(totRet)+' runs out at age '+(ST.ret+depYear)+'. Consider the options below to close the gap.'
+    :str.name+' at '+(str.startRate*100).toFixed(1)+'% is sustainable for all '+years+' years at '+(blend*100).toFixed(1)+'% blended return.'+(blend>str.rate+ST.inf/100?' Corpus is growing.':'');
+  var html='<div class="sf '+cls+'"><div class="sf-hd"><div class="sf-ico">'+ico+'</div>'
+    +'<div><div class="sf-title">'+title+'</div><div class="sf-desc">'+desc+'</div></div></div>'
+    +'<div class="sf-acts">'+sfActs.map(function(a){
+      return '<div class="sfa"><div class="sfa-ico">'+a.ico+'</div><div><div class="sfa-n">'+a.n+'</div><div class="sfa-d">'+a.d+'</div></div></div>';
+    }).join('')+'</div></div>';
+  document.getElementById('sfPanel').innerHTML=html;
+}
+
+/* ════════════════════════════════════════
+   TAX TOGGLE
+════════════════════════════════════════ */
+function toggleTax(){
+  document.getElementById('taxBody').classList.toggle('open');
+  document.getElementById('taxArr').classList.toggle('open');
+}
+
+/* ════════════════════════════════════════
+   FIRE TOGGLE
+════════════════════════════════════════ */
+function toggleFire(){
+  ST.fire=!ST.fire;
+  var btn=document.getElementById('fireTgl');
+  btn.classList.toggle('on',ST.fire);
+  btn.textContent=ST.fire?'🔥 FIRE: ON':'🔥 FIRE Mode';
+  if(ST.fire){ ST.age=28;ST.ret=42; document.getElementById('sl-age').value=28; document.getElementById('sl-ret').value=42; document.getElementById('v-age').textContent=28; document.getElementById('v-ret').textContent=42; }
+  else        { ST.age=35;ST.ret=60; document.getElementById('sl-age').value=35; document.getElementById('sl-ret').value=60; document.getElementById('v-age').textContent=35; document.getElementById('v-ret').textContent=60; }
+  initSliders(); updateHints(); recalc();
+}
+
+/* ════════════════════════════════════════
+   TOUR SYSTEM — clean rewrite
+════════════════════════════════════════ */
+var TOUR = [
+  { target:'sb-ages', pos:'right',
+    title:'1. Set your age & timeline',
+    desc:'Enter your current age and when you plan to retire. If you are ALREADY RETIRED, simply set both sliders to the same age — the calculator skips accumulation and shows withdrawals from your current corpus immediately.' },
+  { target:'sb-invest', pos:'right',
+    title:'2. Enter balances & contributions',
+    desc:'Click each account to enter your current balance, expected return, and monthly contribution. NPS, EPF, PPF, Mutual Funds and FD are each taxed differently — EPF and PPF are fully tax-free, NPS gives 60% tax-free lump sum, FD is fully taxable.' },
+  { target:'chartCard', pos:'left',
+    title:'3. Click any bar on the chart',
+    desc:'Each bar is one year of retirement. Click it to update the three metric cards above with that year\'s exact numbers — portfolio balance, annual withdrawal amount, and monthly income after all taxes. Tax breakdown updates too.' },
+  { target:'sb-strat', pos:'right',
+    title:'4. Pick a withdrawal strategy',
+    desc:'5 proven strategies — each explained in plain English. 4% Rule is the safest. Guardrails gives more income but adjusts dynamically. Compare all 5 in the results panel — each shows your exact monthly income after tax for your specific accounts.' }
+];
+
+var tourStep = 0;
+
+function startTour() {
+  closeWelcome();
+  tourStep = 0;
+  doTourStep(0);
+}
+
+function doTourStep(i) {
+  if(i >= TOUR.length){ endTour(); return; }
+  var step = TOUR[i];
+  var target = document.getElementById(step.target);
+  if(!target){ tourNextStep(); return; }
+
+  // Set content immediately — card never shows blank
+  document.getElementById('tourBadge').textContent = 'Step '+(i+1)+' of '+TOUR.length;
+  document.getElementById('tourTitle').textContent = step.title;
+  document.getElementById('tourDesc').textContent  = step.desc;
+
+  var dots='';
+  for(var j=0;j<TOUR.length;j++) dots+='<div class="tour-dot'+(j===i?' on':'')+'"></div>';
+  document.getElementById('tourDots').innerHTML = dots;
+
+  var btn=document.getElementById('tourNext');
+  btn.textContent = (i===TOUR.length-1) ? 'Get started!' : 'Next →';
+  btn.className   = 'tour-next'+(i===TOUR.length-1?' last':'');
+
+  // Show backdrop
+  var bd=document.getElementById('tourBackdrop');
+  bd.classList.add('show');
+
+  // Scroll target into view, then position
+  target.scrollIntoView({behavior:'smooth',block:'center'});
+
+  setTimeout(function(){
+    var rect=target.getBoundingClientRect();
+    var pad=10;
+
+    // Position spotlight
+    var sp=document.getElementById('tourSpotlight');
+    sp.style.left   = (rect.left-pad)+'px';
+    sp.style.top    = (rect.top-pad)+'px';
+    sp.style.width  = (rect.width+pad*2)+'px';
+    sp.style.height = (rect.height+pad*2)+'px';
+    sp.style.opacity= '1';
+
+    // Position card
+    var card=document.getElementById('tourCard');
+    var cx, cy;
+    if(step.pos==='right') cx=rect.right+20;
+    else cx=rect.left-340;
+    cy=rect.top;
+    cx=Math.max(10,Math.min(cx,window.innerWidth-335));
+    cy=Math.max(10,Math.min(cy,window.innerHeight-310));
+    card.style.left=cx+'px';
+    card.style.top=cy+'px';
+    card.classList.add('show');
+  }, 420);
+}
+
+function tourNextStep(){
+  tourStep++;
+  if(tourStep>=TOUR.length) endTour();
+  else doTourStep(tourStep);
+}
+
+function endTour(){
+  var bd=document.getElementById('tourBackdrop');
+  bd.classList.remove('show');
+  bd.style.pointerEvents='none';
+
+  var sp=document.getElementById('tourSpotlight');
+  sp.style.opacity='0';
+  sp.style.pointerEvents='none';
+  setTimeout(function(){ sp.style.left='-9999px'; },350);
+
+  var card=document.getElementById('tourCard');
+  card.classList.remove('show');
+  card.style.pointerEvents='none';
+  setTimeout(function(){ card.style.left='-9999px'; },350);
+
+  try{ localStorage.setItem('rw_tour_done','1'); }catch(e){}
+}
+
+
+function showWelcomeAndTour(){
+  // Reset flag so tour runs fresh
+  try{ localStorage.removeItem('rw_tour_done'); }catch(ex){}
+  document.getElementById('wmOverlay').classList.remove('hidden');
+}
+
+function closeWelcome(){
+  document.getElementById('wmOverlay').classList.add('hidden');
+  try{ localStorage.setItem('rw_tour_done','1'); }catch(e){}
+  // Don't set sessionStorage here - only set it in the auto-show logic
+}
+
+/* ════════════════════════════════════════
+   INIT
+════════════════════════════════════════ */
+buildAccList();
+buildStratList();
+initSliders();
+updateHints();
+recalc();
+
+// Auto-show welcome modal for first-time visitors
+// Uses localStorage: shows once ever, Tour button resets it
+setTimeout(function(){
+  try{
+    if(!localStorage.getItem('rw_tour_done')){
+      document.getElementById('wmOverlay').classList.remove('hidden');
+    }
+  }catch(e){
+    document.getElementById('wmOverlay').classList.remove('hidden');
+  }
+}, 700);
+</script>
+</body>
+</html>

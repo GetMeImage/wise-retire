@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How Much EPS Pension Will I Get? Calculator + Formula (2026)</title>
+<meta name="description" content="EPS pension formula explained with real examples. How to calculate your Employee Pension Scheme pension using the exact EPFO formula. Who qualifies, how much you'll get, and the ₹15,000 wage ceiling trap.">
+<meta name="keywords" content="EPS pension calculation, employee pension scheme formula, eps pension how much, epf pension calculator india, eps 95 pension 2026">
+<link rel="canonical" href="https://retire-wise-calculator.netlify.app/article-eps-pension-calculation.html">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Article",
+  "headline":"How Much EPS Pension Will I Get? Calculator + Formula (2026)",
+  "description":"Complete guide to calculating your Employee Pension Scheme (EPS) pension using the official EPFO formula, with real examples and the wage ceiling explained",
+  "datePublished":"2026-03-22",
+  "dateModified":"2026-03-22",
+  "author":{"@type":"Organization","name":"RetireWise India"},
+  "publisher":{"@type":"Organization","name":"RetireWise India"}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"What is the formula for EPS pension calculation?","acceptedAnswer":{"@type":"Answer","text":"EPS Monthly Pension = (Pensionable Salary × Pensionable Service) ÷ 70. Pensionable Salary is capped at ₹15,000/month (the statutory wage ceiling). Pensionable Service is your total years of EPS-contributing service, with a bonus of 2 extra years if you have completed 20+ years of service."}},
+    {"@type":"Question","name":"What is the minimum EPS pension in 2026?","acceptedAnswer":{"@type":"Answer","text":"The minimum EPS pension under EPS-95 is ₹1,000 per month, set in 2014. As of 2026, this has not been revised despite repeated demands. Pensioners who retire with very short service get this floor amount instead of the formula-based amount if it works out lower."}},
+    {"@type":"Question","name":"Can I withdraw my EPS corpus as a lump sum?","acceptedAnswer":{"@type":"Answer","text":"Yes, but only if you have less than 10 years of EPS-contributing service. If you have completed 10 years or more, you cannot withdraw the EPS corpus — you must take it as a monthly pension starting from age 58. This is a crucial point many employees miss when switching jobs."}},
+    {"@type":"Question","name":"Is EPS pension taxable?","acceptedAnswer":{"@type":"Answer","text":"Yes. EPS pension income is taxable as salary under both old and new tax regimes. However, given the modest amounts (typically ₹2,000–7,500/month for most employees under the wage ceiling), it often falls below the ₹12 lakh rebate threshold under the new regime, resulting in zero tax."}},
+    {"@type":"Question","name":"What is the ₹15,000 wage ceiling in EPS?","acceptedAnswer":{"@type":"Answer","text":"EPFO uses a maximum wage of ₹15,000/month for EPS pension calculation, regardless of your actual salary. This ceiling has been ₹15,000 since September 2014 and has never been revised. An employee earning ₹80,000/month and one earning ₹15,000/month both use the same ₹15,000 as the pensionable salary in the formula — unless they opted for higher pension under the Supreme Court order."}},
+    {"@type":"Question","name":"How do I get a higher EPS pension above the ₹15,000 ceiling?","acceptedAnswer":{"@type":"Answer","text":"After a Supreme Court order in November 2022, eligible employees who were members of EPS before September 1, 2014 were given a window to opt for higher pension based on their actual salary (not capped at ₹15,000). The EPFO application window closed, but if you applied in time and it has been processed, your pension will be calculated on your actual basic pay — significantly higher for senior employees. Check your UAN portal for status."}}
+  ]
+}
+</script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --g:#00C896;--gd:#009E78;--gl:#E6FBF5;--g3:#9EE0CB;
+  --ink:#0D1117;--ink2:#374151;--ink3:#6B7280;--ink4:#9CA3AF;
+  --bg:#F0F2F6;--card:#FFFFFF;--bd:#E5E7EB;--bd2:#D1D5DB;
+  --red:#EF4444;--redl:#FEF2F2;--amber:#F59E0B;--ambl:#FFFBEB;
+  --blue:#3B82F6;--bluel:#EFF6FF;
+  --sh:0 1px 3px rgba(0,0,0,.05),0 4px 16px rgba(0,0,0,.04);
+  --r:10px;--r2:14px;
+}
+html,body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.6;min-height:100vh}
+.topbar{height:52px;background:var(--card);border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:0 20px;position:sticky;top:0;z-index:100;box-shadow:0 1px 8px rgba(0,0,0,.05)}
+.logo{font-size:16px;font-weight:700;letter-spacing:-.3px;text-decoration:none;color:var(--ink)}.logo b{color:var(--g)}
+.logo-sub{font-size:10px;font-weight:500;color:var(--ink4);background:var(--bg);border-radius:20px;padding:2px 9px;margin-left:6px}
+.nav-link{font-size:11px;font-weight:600;color:var(--ink3);text-decoration:none;padding:5px 10px;border-radius:7px;transition:all .15s}
+.nav-link:hover,.nav-link.active{background:var(--gl);color:var(--gd)}
+.nav-cta{font-size:11px;font-weight:700;background:var(--g);color:#fff;padding:7px 16px;border-radius:8px;text-decoration:none}
+.nav-cta:hover{background:var(--gd)}
+.reading-progress{position:fixed;top:52px;left:0;width:0%;height:3px;background:var(--g);z-index:200;transition:width .1s linear}
+.art-hero{background:var(--ink);padding:48px 20px 40px}
+.art-hero-inner{max-width:780px;margin:0 auto}
+.breadcrumb{font-size:11px;color:rgba(255,255,255,.4);margin-bottom:14px}
+.breadcrumb a{color:rgba(255,255,255,.4);text-decoration:none}
+.breadcrumb a:hover{color:var(--g)}
+.art-eyebrow{display:inline-flex;align-items:center;gap:8px;margin-bottom:14px}
+.art-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;background:rgba(0,200,150,.15);color:var(--g);padding:3px 10px;border-radius:20px;border:1px solid rgba(0,200,150,.2)}
+.art-new{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;background:#3B82F6;color:#fff;padding:3px 8px;border-radius:4px}
+h1{font-size:32px;font-weight:700;color:#fff;line-height:1.2;margin-bottom:14px;letter-spacing:-.4px}
+.art-sub{font-size:15px;color:rgba(255,255,255,.65);line-height:1.7;margin-bottom:20px;max-width:640px}
+.art-meta{display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:rgba(255,255,255,.5)}
+.art-meta span{display:flex;align-items:center;gap:4px}
+.stats-row{background:var(--card);border-bottom:1px solid var(--bd);padding:16px 20px;display:flex;justify-content:center;gap:0}
+.stat-item{flex:1;max-width:160px;text-align:center;padding:0 16px;border-right:1px solid var(--bd)}
+.stat-item:last-child{border-right:none}
+.stat-val{font-family:'DM Mono',monospace;font-size:22px;font-weight:500;color:var(--gd);display:block;margin-bottom:3px}
+.stat-lbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--ink4)}
+.art-layout{max-width:1020px;margin:0 auto;padding:36px 20px 80px;display:grid;grid-template-columns:1fr 260px;gap:40px;align-items:start}
+@media(max-width:760px){.art-layout{grid-template-columns:1fr}.sidebar{display:none}}
+.art-body h2{font-size:21px;font-weight:700;color:var(--ink);margin:32px 0 12px;padding-top:8px;border-top:2px solid var(--bd)}
+.art-body h2:first-child{border-top:none;margin-top:0}
+.art-body h3{font-size:16px;font-weight:700;color:var(--ink);margin:22px 0 10px}
+.art-body p{font-size:14px;color:var(--ink2);line-height:1.85;margin-bottom:14px}
+.art-body ul,.art-body ol{margin:0 0 14px 20px}
+.art-body li{font-size:14px;color:var(--ink2);line-height:1.8;margin-bottom:7px}
+.art-body strong{color:var(--ink);font-weight:700}
+.art-body a{color:var(--g);font-weight:500;text-decoration:none}
+.art-body a:hover{text-decoration:underline}
+.callout{border-radius:var(--r);padding:14px 18px;margin:16px 0;font-size:13px;line-height:1.7}
+.callout-green{background:var(--gl);border-left:3px solid var(--g);border-radius:0 var(--r) var(--r) 0;color:#0A4A2E}
+.callout-amber{background:var(--ambl);border-left:3px solid var(--amber);border-radius:0 var(--r) var(--r) 0;color:#5A3800}
+.callout-blue{background:var(--bluel);border-left:3px solid var(--blue);border-radius:0 var(--r) var(--r) 0;color:#1E3A5F}
+.callout-red{background:var(--redl);border-left:3px solid var(--red);border-radius:0 var(--r) var(--r) 0;color:#7F1D1D}
+/* FORMULA BOX */
+.formula-box{background:var(--ink);border-radius:var(--r2);padding:22px 24px;margin:20px 0;text-align:center}
+.formula-main{font-family:'DM Mono',monospace;font-size:18px;color:#fff;margin-bottom:10px;line-height:1.6}
+.formula-main span{color:var(--g)}
+.formula-note{font-size:11px;color:rgba(255,255,255,.5);line-height:1.6}
+.rule-card{background:var(--card);border:1px solid var(--bd);border-radius:var(--r2);padding:0;overflow:hidden;margin:20px 0;box-shadow:var(--sh)}
+.rule-card-header{background:var(--ink);padding:12px 18px;display:flex;align-items:center;gap:10px}
+.rule-card-title{font-size:13px;font-weight:700;color:#fff}
+.rule-card-badge{font-size:10px;font-weight:700;background:var(--g);color:#fff;padding:2px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:.05em}
+.rule-rows{padding:4px 0}
+.rule-row{display:grid;grid-template-columns:160px 1fr 1fr;gap:0;border-bottom:1px solid var(--bd)}
+.rule-row.three-col{grid-template-columns:1fr 1fr 1fr}
+.rule-row:last-child{border-bottom:none}
+.rule-row.header{background:var(--bg)}
+.rule-cell{padding:10px 14px;font-size:12px;color:var(--ink2);border-right:1px solid var(--bd)}
+.rule-cell:last-child{border-right:none}
+.rule-cell.header-cell{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink4)}
+.rule-cell.good{color:var(--gd);font-weight:600}
+.rule-cell.warn{color:var(--amber);font-weight:600}
+.rule-cell.bad{color:var(--red);font-weight:600}
+.rule-cell.strong{font-weight:700;color:var(--ink)}
+.example{background:var(--gl);border-radius:var(--r2);padding:18px 20px;margin:16px 0}
+.example-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--gd);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.example-label::before{content:'';width:3px;height:14px;background:var(--g);border-radius:2px;display:inline-block}
+.example-body{font-size:13px;color:#0A4A2E;line-height:1.8}
+.example-result{background:rgba(0,0,0,.06);border-radius:8px;padding:10px 14px;margin-top:10px;font-size:13px;font-weight:600;color:#064A36}
+.comp-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13px;border-radius:var(--r2);overflow:hidden;box-shadow:var(--sh)}
+.comp-table thead tr{background:var(--ink)}
+.comp-table th{padding:10px 14px;text-align:left;color:#fff;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.comp-table td{padding:10px 14px;border-bottom:1px solid var(--bd);vertical-align:top;color:var(--ink2)}
+.comp-table tr:last-child td{border-bottom:none}
+.comp-table tr:nth-child(even) td{background:#FAFBFC}
+.comp-table td.good{color:var(--gd);font-weight:700}
+.comp-table td.bad{color:var(--red);font-weight:600}
+.comp-table td.warn{color:var(--amber);font-weight:600}
+.art-cta{background:var(--ink);border-radius:var(--r2);padding:20px 22px;margin:24px 0;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.art-cta-title{font-size:15px;font-weight:700;color:#fff;margin-bottom:4px}
+.art-cta-sub{font-size:12px;color:rgba(255,255,255,.6)}
+.art-cta-btn{background:var(--g);color:#fff;font-size:12px;font-weight:700;padding:10px 22px;border-radius:8px;text-decoration:none;white-space:nowrap;transition:background .15s;flex-shrink:0}
+.art-cta-btn:hover{background:var(--gd)}
+.faq{margin-top:8px}
+.faq-item{border:1px solid var(--bd);border-radius:var(--r);margin-bottom:8px;overflow:hidden;background:var(--card)}
+.faq-q{padding:13px 16px;font-size:13px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--ink);user-select:none}
+.faq-q:hover{background:var(--bg)}
+.faq-icon{color:var(--ink4);transition:transform .25s;font-size:14px;flex-shrink:0;margin-left:8px}
+.faq-item.open .faq-icon{transform:rotate(180deg)}
+.faq-a{display:none;padding:0 16px 14px;font-size:13px;color:var(--ink3);line-height:1.7;border-top:1px solid var(--bd);padding-top:12px}
+.faq-item.open .faq-a{display:block}
+.sidebar{position:sticky;top:72px}
+.sb-card{background:var(--card);border:1px solid var(--bd);border-radius:var(--r2);padding:16px;box-shadow:var(--sh);margin-bottom:12px}
+.sb-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--ink4);margin-bottom:12px}
+.sb-cta{background:var(--g);color:#fff;padding:11px 14px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;display:block;text-align:center;transition:background .15s;margin-bottom:10px}
+.sb-cta:hover{background:var(--gd)}
+.sb-note{font-size:11px;color:var(--ink4);line-height:1.55}
+.toc a{display:block;color:var(--ink3);font-size:12px;text-decoration:none;padding:6px 0;border-bottom:1px solid var(--bd);transition:all .15s;line-height:1.4}
+.toc a:last-child{border-bottom:none}
+.toc a:hover,.toc a.active-toc{color:var(--g);padding-left:4px}
+.rel-link{display:flex;gap:10px;text-decoration:none;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--bd);align-items:flex-start}
+.rel-link:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
+.rel-icon{width:34px;height:34px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.rel-title{font-size:12px;font-weight:600;color:var(--ink);line-height:1.4}
+footer{text-align:center;padding:20px;font-size:11px;color:var(--ink4);border-top:1px solid var(--bd);background:var(--card)}
+footer a{color:var(--ink3);text-decoration:none;margin:0 7px}
+footer a:hover{color:var(--g)}
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WNB4QF45SW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WNB4QF45SW');
+</script>
+</head>
+<body>
+
+<div class="reading-progress" id="rp"></div>
+
+<div class="topbar">
+  <div style="display:flex;align-items:center;gap:12px">
+    <a href="index.html" class="logo">Retire<b>Wise</b><span class="logo-sub">🇮🇳 India</span></a>
+    <nav style="display:flex;align-items:center;gap:2px;margin-left:8px">
+      <a href="index.html" class="nav-link">🏠 Home</a>
+      <a href="resources.html" class="nav-link active">📚 Resources</a>
+      <a href="about.html" class="nav-link">ℹ️ About</a>
+      <a href="contact.html" class="nav-link">✉️ Contact</a>
+    </nav>
+  </div>
+  <a href="calculator.html" class="nav-cta">Open Calculator →</a>
+</div>
+
+<div class="art-hero">
+  <div class="art-hero-inner">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a> / <a href="resources.html">Resources</a> / EPS Pension Calculation 2026
+    </div>
+    <div class="art-eyebrow">
+      <span class="art-tag">EPF / EPS Guide</span>
+      <span class="art-new">📐 With Calculator</span>
+    </div>
+    <h1>How Much EPS Pension Will<br>I Actually Get?</h1>
+    <p class="art-sub">Most salaried employees have been quietly building an EPS pension for decades without knowing it. Here is the exact EPFO formula, the ₹15,000 ceiling that caps most pensions, and how to calculate your exact monthly amount.</p>
+    <div class="art-meta">
+      <span>📅 March 2026</span>
+      <span>⏱️ 9 min read</span>
+      <span>✅ EPFO EPS-95 rules</span>
+      <span>🎯 All salaried employees</span>
+    </div>
+  </div>
+</div>
+
+<div class="stats-row">
+  <div class="stat-item">
+    <span class="stat-val">8.33%</span>
+    <span class="stat-lbl">Employer EPF → EPS</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-val">₹15K</span>
+    <span class="stat-lbl">Wage ceiling (since 2014)</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-val">10 yrs</span>
+    <span class="stat-lbl">Min service for pension</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-val">÷ 70</span>
+    <span class="stat-lbl">The magic divisor</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-val">₹1,000</span>
+    <span class="stat-lbl">Minimum pension</span>
+  </div>
+</div>
+
+<div class="art-layout">
+<article class="art-body">
+
+  <h2 id="what-is-eps">What Is EPS and Who Has It?</h2>
+
+  <p>Every salaried employee in India who is a member of EPFO (Employees' Provident Fund Organisation) is also automatically a member of EPS — the Employee Pension Scheme. It runs alongside your EPF account but is entirely separate.</p>
+
+  <p>Here is how the money flows. When your employer contributes 12% of your basic pay to your EPF, that full 12% does not go into your EPF account. Instead, it splits:</p>
+
+  <ul>
+    <li><strong>3.67%</strong> goes into your EPF (the savings account you can withdraw)</li>
+    <li><strong>8.33%</strong> goes into EPS (the pension account — you cannot withdraw this directly if you have 10+ years of service)</li>
+  </ul>
+
+  <p>Your own 12% contribution goes entirely into your EPF. You contribute nothing directly to EPS. The government also adds a small 1.16% subsidy to EPS from its own pocket.</p>
+
+  <div class="callout callout-amber">
+    ⚠️ <strong>The 8.33% is capped at ₹15,000:</strong> Even if your basic salary is ₹1,00,000/month, only 8.33% of ₹15,000 = ₹1,250/month flows into EPS. The remaining employer contribution goes into your EPF. This wage ceiling is the reason most private sector employees end up with a much smaller EPS pension than they expect.
+  </div>
+
+  <h2 id="formula">The Exact EPS Pension Formula</h2>
+
+  <p>EPFO uses one formula to calculate your monthly pension at retirement. No variations, no adjustments for market returns. It is purely a function of two things: your pensionable salary and your years of service.</p>
+
+  <div class="formula-box">
+    <div class="formula-main">
+      Monthly Pension = <span>(Pensionable Salary × Pensionable Service)</span> ÷ 70
+    </div>
+    <div class="formula-note">
+      Pensionable Salary = Average of last 60 months' basic pay, capped at ₹15,000<br>
+      Pensionable Service = Total EPS-contributing years (bonus of 2 extra years if ≥ 20 years service)
+    </div>
+  </div>
+
+  <p>That is it. One formula. Two variables. The divisor 70 is fixed by EPFO and has never changed since EPS-95 was introduced.</p>
+
+  <h3>What "Pensionable Salary" Means</h3>
+
+  <p>Pensionable Salary is the <strong>average of your last 60 months</strong> (5 years) of basic pay before retirement — but capped at ₹15,000/month. This ceiling was last revised in September 2014 (from ₹6,500 to ₹15,000) and has not been updated since.</p>
+
+  <p>In practice, this means: if your basic pay at retirement is ₹80,000/month, your pensionable salary is still treated as ₹15,000 for the formula. This is the single biggest limitation of EPS for private sector employees.</p>
+
+  <h3>The 2-Year Bonus for Long Service</h3>
+
+  <p>If you have completed 20 or more years of EPS-contributing service, EPFO adds 2 bonus years to your pensionable service count. So 20 years of service is counted as 22, 25 years as 27, and 30 years as 32 in the formula.</p>
+
+  <h2 id="examples">Real Calculation Examples</h2>
+
+  <h3>Example 1: Rajesh — 30 Years of Service, Standard Ceiling</h3>
+
+  <div class="example">
+    <div class="example-label">Rajesh's EPS Calculation</div>
+    <div class="example-body">
+      Age at retirement: 58<br>
+      Total EPS service: 30 years<br>
+      Average basic pay (last 5 years): ₹75,000/month<br>
+      Pensionable Salary (capped): <strong>₹15,000</strong><br>
+      Pensionable Service (30 years + 2 bonus): <strong>32 years</strong><br><br>
+      Monthly Pension = (₹15,000 × 32) ÷ 70<br>
+      = ₹4,80,000 ÷ 70<br>
+      = <strong>₹6,857/month</strong>
+    </div>
+    <div class="example-result">EPS Pension: ₹6,857/month for life · Tax-free if total income under ₹12L · Spouse gets 50% on death</div>
+  </div>
+
+  <h3>Example 2: Priya — 15 Years of Service</h3>
+
+  <div class="example">
+    <div class="example-label">Priya's EPS Calculation</div>
+    <div class="example-body">
+      Age at retirement: 58<br>
+      Total EPS service: 15 years<br>
+      Pensionable Salary (capped): <strong>₹15,000</strong><br>
+      Pensionable Service: <strong>15 years</strong> (no bonus — needs 20 years for that)<br><br>
+      Monthly Pension = (₹15,000 × 15) ÷ 70<br>
+      = ₹2,25,000 ÷ 70<br>
+      = <strong>₹3,214/month</strong>
+    </div>
+    <div class="example-result">EPS Pension: ₹3,214/month · If Priya had done 20 years: ₹4,714/month (with bonus years)</div>
+  </div>
+
+  <h3>The Maximum Possible EPS Pension Under Standard Rules</h3>
+
+  <div class="example">
+    <div class="example-label">Maximum Standard EPS Pension (35 years service)</div>
+    <div class="example-body">
+      Pensionable Salary: ₹15,000 (maximum allowed)<br>
+      Pensionable Service: 35 years + 2 bonus = 37 years<br><br>
+      Monthly Pension = (₹15,000 × 37) ÷ 70 = <strong>₹7,929/month</strong><br><br>
+      This is the absolute maximum pension under standard EPS-95 rules for private sector employees. Even someone who worked for 40 years at the highest salary gets roughly ₹8,500/month.
+    </div>
+    <div class="example-result">Maximum standard EPS pension: ~₹7,929–₹8,571/month · This is why it's a supplement, not a retirement plan</div>
+  </div>
+
+  <div class="callout callout-red">
+    🔴 <strong>The harsh reality:</strong> At 5.5% annual inflation, ₹7,000/month today will have the purchasing power of just ₹2,300/month in 20 years. EPS pension is <em>not inflation-indexed</em>. It is fixed at the rate when you retire, forever. Treat it as a welcome supplement to your EPF corpus — not as your retirement plan.
+  </div>
+
+  <h2 id="ceiling">The ₹15,000 Ceiling — And the Higher Pension Option</h2>
+
+  <p>The ₹15,000 wage ceiling was set in 2014 and has never been revised. For context, ₹15,000 was roughly the median formal sector salary in 2014. In 2026, it is barely above the minimum wage in many states. Most private sector employees earning above ₹15,000 basic pay are effectively capped.</p>
+
+  <p>In November 2022, the Supreme Court of India ruled that employees who were EPFO members before September 1, 2014 had the right to opt for a higher pension based on their actual salary — not the ₹15,000 ceiling. EPFO opened an application window. If you applied and were approved, your pension will be recalculated on your actual average salary (which can be 5–10x higher), dramatically increasing your pension.</p>
+
+  <div class="callout callout-blue">
+    💡 <strong>Check your status:</strong> If you applied for higher pension under the Supreme Court order, log into the EPFO member portal (unifiedportal-mem.epfindia.gov.in), go to "Online Services → Higher Wage Pension Application Status" to check where your application stands. Approved applications can result in pensions 3–8x higher than the standard formula.
+  </div>
+
+  <h2 id="pension-table">Quick Reference: EPS Pension by Service Years</h2>
+
+  <table class="comp-table">
+    <thead>
+      <tr>
+        <th>Service Years</th>
+        <th>Pensionable Service (with bonus)</th>
+        <th>Monthly Pension (₹15K ceiling)</th>
+        <th>Pension if ceiling raised to ₹25K</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>10 years</td>
+        <td>10 years</td>
+        <td class="warn">₹2,143/month</td>
+        <td>₹3,571/month</td>
+      </tr>
+      <tr>
+        <td>15 years</td>
+        <td>15 years</td>
+        <td class="warn">₹3,214/month</td>
+        <td>₹5,357/month</td>
+      </tr>
+      <tr>
+        <td>20 years</td>
+        <td>22 years (with bonus)</td>
+        <td class="warn">₹4,714/month</td>
+        <td>₹7,857/month</td>
+      </tr>
+      <tr>
+        <td>25 years</td>
+        <td>27 years</td>
+        <td class="good">₹5,786/month</td>
+        <td>₹9,643/month</td>
+      </tr>
+      <tr>
+        <td>30 years</td>
+        <td>32 years</td>
+        <td class="good">₹6,857/month</td>
+        <td>₹11,429/month</td>
+      </tr>
+      <tr>
+        <td>35 years</td>
+        <td>37 years</td>
+        <td class="good">₹7,929/month</td>
+        <td>₹13,214/month</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 id="eligibility">Who Qualifies for EPS Pension?</h2>
+
+  <div class="rule-card">
+    <div class="rule-card-header">
+      <div class="rule-card-title">EPS Pension Eligibility Rules</div>
+      <div class="rule-card-badge">EPS-95</div>
+    </div>
+    <div class="rule-rows">
+      <div class="rule-row header">
+        <div class="rule-cell header-cell">Condition</div>
+        <div class="rule-cell header-cell">Requirement</div>
+        <div class="rule-cell header-cell">Notes</div>
+      </div>
+      <div class="rule-row">
+        <div class="rule-cell strong">Minimum service</div>
+        <div class="rule-cell good">10 years</div>
+        <div class="rule-cell">Below 10 years → can withdraw EPS corpus as lump sum</div>
+      </div>
+      <div class="rule-row">
+        <div class="rule-cell strong">Pension start age</div>
+        <div class="rule-cell good">58 years (full pension)</div>
+        <div class="rule-cell">Can start at 50 with reduced pension (4% reduction per year before 58)</div>
+      </div>
+      <div class="rule-row">
+        <div class="rule-cell strong">Deferred pension</div>
+        <div class="rule-cell good">Up to age 60</div>
+        <div class="rule-cell">4% increase per year of deferral after 58</div>
+      </div>
+      <div class="rule-row">
+        <div class="rule-cell strong">EPFO membership</div>
+        <div class="rule-cell">Required throughout</div>
+        <div class="rule-cell">Service with non-EPFO employers doesn't count</div>
+      </div>
+      <div class="rule-row">
+        <div class="rule-cell strong">Continuous service</div>
+        <div class="rule-cell warn">Can be from multiple employers</div>
+        <div class="rule-cell">Transfer EPS when switching jobs — do not withdraw</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 id="early-late">Early vs Deferred Pension</h2>
+
+  <p>You do not have to start your EPS pension at 58. EPFO gives you flexibility:</p>
+
+  <p><strong>Early pension (age 50–57):</strong> You can start drawing your EPS pension as early as age 50, but your pension is reduced by 4% for every year before 58. So starting at 55 means a 12% permanent reduction. Starting at 50 means a 32% permanent reduction. The reduced amount is fixed for life.</p>
+
+  <p><strong>Deferred pension (age 59–60):</strong> If you wait beyond 58, EPFO adds 4% for each year of deferral, up to age 60. So deferring to 60 increases your pension by 8%. For Rajesh's ₹6,857/month pension, deferring to 60 gives ₹7,405/month — for life.</p>
+
+  <div class="example">
+    <div class="example-label">Early vs Deferred: Impact on Rajesh's ₹6,857/month Pension</div>
+    <div class="example-body">
+      Start at age 50: ₹6,857 × (1 − 32%) = <strong>₹4,663/month</strong> (32% reduction for 8 years early)<br>
+      Start at age 55: ₹6,857 × (1 − 12%) = <strong>₹6,034/month</strong> (12% reduction for 3 years early)<br>
+      Start at age 58: <strong>₹6,857/month</strong> (standard)<br>
+      Defer to age 60: ₹6,857 × (1 + 8%) = <strong>₹7,405/month</strong> (8% increase for 2 years late)
+    </div>
+    <div class="example-result">Recommendation: Defer to 60 if you have other income. The 8% boost is permanent and paid for life.</div>
+  </div>
+
+  <h2 id="job-switch">The Job-Switching Trap: Why You Must Transfer, Not Withdraw</h2>
+
+  <p>This is the most expensive mistake private sector employees make. When you switch jobs, you have two options for your EPF/EPS: withdraw it or transfer it to your new employer's PF trust.</p>
+
+  <p><strong>If you withdraw before 10 years of total service:</strong> You get your EPS corpus back as a lump sum. Fine. But your EPS service clock resets to zero with your new employer.</p>
+
+  <p><strong>If you withdraw after 10 years of total service:</strong> You lose the pension entitlement entirely — the EPS portion is forfeited. You cannot get it back.</p>
+
+  <p><strong>The right move is always to transfer.</strong> Use the EPFO online transfer portal (UAN-based) within 30 days of joining your new employer. Your EPS service from all previous employers accumulates seamlessly. This is how you build 25–30 years of pensionable service even across 5 different companies.</p>
+
+  <div class="callout callout-red">
+    🔴 <strong>Never withdraw EPF/EPS when switching jobs.</strong> The EPS portion (8.33% of ₹15,000 = ₹1,250/month) is a guaranteed pension for life worth ₹5,000–7,000/month at retirement. Taking the lump sum (a few thousand rupees) in exchange for this lifetime benefit is an extremely poor financial decision. Always transfer.
+  </div>
+
+  <h2 id="eps-vs-epf">EPS vs EPF: Know the Difference</h2>
+
+  <table class="comp-table">
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th>EPF (Employee Provident Fund)</th>
+        <th>EPS (Employee Pension Scheme)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Who contributes</td>
+        <td>Employee 12% + Employer 3.67%</td>
+        <td>Employer 8.33% only</td>
+      </tr>
+      <tr>
+        <td>Interest rate</td>
+        <td class="good">8.25% (FY2025-26)</td>
+        <td class="warn">No interest — pension formula based</td>
+      </tr>
+      <tr>
+        <td>Withdrawal</td>
+        <td class="good">Lump sum at retirement (tax-free 5+ years)</td>
+        <td class="warn">Monthly pension only (if 10+ years service)</td>
+      </tr>
+      <tr>
+        <td>Inflation protection</td>
+        <td class="warn">Returns adjust with government rate</td>
+        <td class="bad">None — fixed pension forever</td>
+      </tr>
+      <tr>
+        <td>Nominee benefit on death</td>
+        <td class="good">Full corpus to nominee</td>
+        <td class="warn">50% family pension to spouse</td>
+      </tr>
+      <tr>
+        <td>Tax on withdrawal</td>
+        <td class="good">Tax-free after 5 years</td>
+        <td class="warn">Pension is taxable as salary</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 id="in-retirement">How to Factor EPS Into Your Retirement Plan</h2>
+
+  <p>Think of your EPS pension as a guaranteed monthly floor — not your retirement plan. For Rajesh with ₹6,857/month, this is equivalent to having a fixed deposit corpus of roughly <strong>₹20 lakh at 4% withdrawal rate</strong>. It reduces the EPF + NPS + MF corpus you need to generate from your investments.</p>
+
+  <p>Practically: if your monthly expenses at retirement are ₹60,000 and your EPS pension is ₹7,000, your investments only need to generate ₹53,000/month. At the 4% rule, that is ₹1.59 crore of corpus instead of ₹1.8 crore. The EPS pension effectively reduces your required corpus by about ₹21 lakh.</p>
+
+  <div class="art-cta">
+    <div>
+      <div class="art-cta-title">Include your EPF in your full retirement plan</div>
+      <div class="art-cta-sub">The RetireWise calculator models EPF (8.25% tax-free) alongside NPS, PPF, MF and FD — giving you exact monthly income after all taxes</div>
+    </div>
+    <a href="calculator.html" class="art-cta-btn">Open Free Calculator →</a>
+  </div>
+
+  <h2 id="faq">Frequently Asked Questions</h2>
+
+  <div class="faq">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFAQ(this)">What is the formula for EPS pension calculation? <span class="faq-icon">▼</span></div>
+      <div class="faq-a">EPS Monthly Pension = (Pensionable Salary × Pensionable Service) ÷ 70. Pensionable Salary is capped at ₹15,000/month. Pensionable Service is your total years of EPS-contributing service, with a bonus of 2 extra years if you have completed 20+ years of service.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFAQ(this)">What is the minimum EPS pension in 2026? <span class="faq-icon">▼</span></div>
+      <div class="faq-a">The minimum EPS pension under EPS-95 is ₹1,000 per month, set in 2014. As of 2026, this has not been revised despite repeated demands from pensioner associations. Pensioners whose formula-based pension is below ₹1,000 automatically receive this floor amount.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFAQ(this)">Can I withdraw my EPS corpus as a lump sum? <span class="faq-icon">▼</span></div>
+      <div class="faq-a">Yes, but only if you have less than 10 years of EPS-contributing service. If you have completed 10 years or more, you cannot withdraw the EPS corpus — you must take it as a monthly pension starting from age 58. This is a crucial point many employees miss when switching jobs.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFAQ(this)">Is EPS pension taxable? <span class="faq-icon">▼</span></div>
+      <div class="faq-a">Yes. EPS pension income is taxable as salary under both old and new tax regimes. However, given the modest amounts (typically ₹2,000–7,500/month for most employees under the wage ceiling), it often falls below the ₹12 lakh rebate threshold under the new regime, resulting in zero tax for most EPS pensioners.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFAQ(this)">What is the ₹15,000 wage ceiling in EPS? <span class="faq-icon">▼</span></div>
+      <div class="faq-a">EPFO uses a maximum wage of ₹15,000/month for EPS pension calculation, regardless of your actual salary. This ceiling has been ₹15,000 since September 2014 and has not been revised. An employee earning ₹80,000/month and one earning ₹15,000/month both use ₹15,000 as pensionable salary — unless they opted for higher pension under the Supreme Court order.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFAQ(this)">How do I check my EPS pension balance? <span class="faq-icon">▼</span></div>
+      <div class="faq-a">Log into the EPFO member portal at unifiedportal-mem.epfindia.gov.in using your UAN and password. Go to "View → Service History" to see your total pensionable service across all employers. Your EPS contributions are shown separately from EPF in your passbook. For a pension estimate, use the formula: (15,000 × years of service) ÷ 70.</div>
+    </div>
+  </div>
+
+</article>
+
+<aside class="sidebar">
+  <div class="sb-card">
+    <div class="sb-title">Plan Your Full Retirement</div>
+    <a href="calculator.html" class="sb-cta">Open Free Calculator →</a>
+    <div class="sb-note">Model your EPF (8.25%), NPS, PPF, MF and FD together. See exact monthly income after all taxes — year by year.</div>
+  </div>
+
+  <div class="sb-card">
+    <div class="sb-title">Table of Contents</div>
+    <nav class="toc">
+      <a href="#what-is-eps">What is EPS?</a>
+      <a href="#formula">The pension formula</a>
+      <a href="#examples">Real calculation examples</a>
+      <a href="#ceiling">The ₹15,000 ceiling</a>
+      <a href="#pension-table">Pension by service years</a>
+      <a href="#eligibility">Who qualifies</a>
+      <a href="#early-late">Early vs deferred pension</a>
+      <a href="#job-switch">The job-switching trap</a>
+      <a href="#eps-vs-epf">EPS vs EPF</a>
+      <a href="#in-retirement">Using EPS in your plan</a>
+      <a href="#faq">FAQs</a>
+    </nav>
+  </div>
+
+  <div class="sb-card">
+    <div class="sb-title">Related Articles</div>
+    <a href="article-epf-withdrawal-rules.html" class="rel-link">
+      <div class="rel-icon" style="background:var(--gl)">🏦</div>
+      <div class="rel-title">EPF Withdrawal Rules: Tax, Timing & TDS (2026)</div>
+    </a>
+    <a href="article-retirement-planning-salaried.html" class="rel-link">
+      <div class="rel-icon" style="background:var(--bluel)">💼</div>
+      <div class="rel-title">Retirement Planning for Salaried Employees: Step-by-Step</div>
+    </a>
+    <a href="article-how-much-to-retire.html" class="rel-link">
+      <div class="rel-icon" style="background:var(--ambl)">🏙️</div>
+      <div class="rel-title">How Much Do You Need to Retire in India? 2026</div>
+    </a>
+  </div>
+</aside>
+</div>
+
+<footer>
+  <div style="margin-bottom:8px">
+    <a href="index.html">🏠 Home</a><a href="calculator.html">🧮 Calculator</a><a href="resources.html">📚 Resources</a><a href="about.html">ℹ️ About</a><a href="contact.html">✉️ Contact</a><a href="privacy.html">🔒 Privacy</a>
+  </div>
+  <div style="font-size:10px">© 2026 RetireWise India · Free retirement calculator · Not financial advice · EPS-95 rules as per EPFO</div>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  var d=document.documentElement;
+  var pct=d.scrollTop/(d.scrollHeight-d.clientHeight)*100;
+  var bar=document.getElementById('rp');
+  if(bar)bar.style.width=Math.min(100,pct)+'%';
+},{passive:true});
+(function(){
+  var sections=document.querySelectorAll('.art-body h2[id]');
+  var links=document.querySelectorAll('.toc a');
+  window.addEventListener('scroll',function(){
+    var sy=window.scrollY+80,active=null;
+    sections.forEach(function(s){if(s.offsetTop<=sy)active=s.id;});
+    links.forEach(function(a){
+      var h=a.getAttribute('href').replace('#','');
+      a.classList.toggle('active-toc',h===active);
+    });
+  },{passive:true});
+})();
+function toggleFAQ(el){
+  var item=el.closest('.faq-item');
+  item.classList.toggle('open');
+}
+</script>
+</body>
+</html>

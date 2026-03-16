@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RetireWise India — Free Retirement Withdrawal Calculator | NPS EPF PPF</title>
+<meta name="description" content="India's most accurate free retirement withdrawal calculator. Enter your NPS, EPF, PPF, Mutual Fund and FD balances — get exact monthly income after FY2025-26 taxes. No login required.">
+<meta name="keywords" content="retirement calculator india, nps withdrawal calculator, epf retirement, retirement planning india 2025, 4% rule india">
+<link rel="canonical" href="https://retire-wise-calculator.netlify.app/">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"RetireWise India","description":"Free retirement withdrawal calculator for India with NPS, EPF, PPF support","applicationCategory":"FinanceApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"}}</script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --g:#00C896;--gd:#009E78;--gl:#E6FBF5;--g3:#9EE0CB;
+  --ink:#0D1117;--ink2:#374151;--ink3:#6B7280;--ink4:#9CA3AF;
+  --bg:#F0F2F6;--card:#FFFFFF;--bd:#E5E7EB;--bd2:#D1D5DB;
+  --red:#EF4444;--redl:#FEF2F2;--amber:#F59E0B;--ambl:#FFFBEB;
+  --blue:#3B82F6;--bluel:#EFF6FF;
+  --sh:0 1px 3px rgba(0,0,0,.05),0 4px 16px rgba(0,0,0,.04);
+  --r:10px;--r2:14px;
+}
+html,body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.6;min-height:100vh}
+.topbar{height:52px;background:var(--card);border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:0 20px;position:sticky;top:0;z-index:100;box-shadow:0 1px 8px rgba(0,0,0,.05)}
+.logo{font-size:16px;font-weight:700;letter-spacing:-.3px;text-decoration:none;color:var(--ink)}.logo b{color:var(--g)}
+.logo-sub{font-size:10px;font-weight:500;color:var(--ink4);background:var(--bg);border-radius:20px;padding:2px 9px;margin-left:6px}
+.nav-link{font-size:11px;font-weight:600;color:var(--ink3);text-decoration:none;padding:5px 10px;border-radius:7px;transition:all .15s}
+.nav-link:hover{background:var(--bg);color:var(--ink)}
+.nav-link.active{background:var(--gl);color:var(--gd)}
+.nav-cta{font-size:11px;font-weight:700;background:var(--g);color:#fff;padding:7px 16px;border-radius:8px;text-decoration:none}
+.nav-cta:hover{background:var(--gd)}
+.hero{background:var(--ink);padding:56px 20px 48px;text-align:center}
+.hero-tag{display:inline-block;background:rgba(0,200,150,.15);color:var(--g);font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:16px;border:1px solid rgba(0,200,150,.2)}
+.hero h1{font-size:34px;font-weight:700;color:#fff;letter-spacing:-.5px;line-height:1.15;margin-bottom:14px;max-width:620px;margin-left:auto;margin-right:auto}
+.hero h1 em{font-style:normal;color:var(--g)}
+.hero-sub{font-size:14px;color:rgba(255,255,255,.6);max-width:500px;margin:0 auto 24px;line-height:1.7}
+.hero-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:28px}
+.btn-primary{background:var(--g);color:#fff;padding:12px 26px;border-radius:10px;font-size:14px;font-weight:700;text-decoration:none;transition:all .2s;font-family:'Sora',sans-serif;display:inline-block}
+.btn-primary:hover{background:var(--gd)}
+.btn-ghost{background:rgba(255,255,255,.08);color:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.15);padding:12px 26px;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none;font-family:'Sora',sans-serif;display:inline-block}
+.btn-ghost:hover{background:rgba(255,255,255,.14)}
+.hero-badges{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.h-badge{font-size:11px;font-weight:600;color:rgba(255,255,255,.45);display:flex;align-items:center;gap:5px}
+.h-badge::before{content:'✓';color:var(--g)}
+.stats{background:var(--card);border-bottom:1px solid var(--bd);padding:14px 20px;display:flex;align-items:center;justify-content:center;gap:36px;flex-wrap:wrap}
+.stat-num{font-size:18px;font-weight:700;color:var(--gd);font-family:'DM Mono',monospace;display:block}
+.stat-lbl{font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.07em}
+.section{max-width:800px;margin:0 auto;padding:36px 20px}
+.section-tag{display:inline-block;background:var(--gl);color:var(--gd);font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:3px 12px;border-radius:20px;margin-bottom:10px}
+.section-title{font-size:22px;font-weight:700;color:var(--ink);letter-spacing:-.3px;margin-bottom:8px}
+.section-sub{font-size:13px;color:var(--ink3);line-height:1.7;margin-bottom:24px}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.feat-card{background:var(--card);border:1px solid var(--bd);border-radius:var(--r2);padding:18px;box-shadow:var(--sh);transition:all .2s}
+.feat-card:hover{border-color:var(--g3);box-shadow:0 4px 20px rgba(0,200,150,.1);transform:translateY(-2px)}
+.feat-icon{width:34px;height:34px;background:var(--gl);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:10px}
+.feat-title{font-size:12px;font-weight:700;color:var(--ink);margin-bottom:5px}
+.feat-desc{font-size:11px;color:var(--ink3);line-height:1.6}
+.steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.step-card{background:var(--card);border:1px solid var(--bd);border-radius:var(--r2);padding:16px;box-shadow:var(--sh);text-align:center}
+.step-n{font-family:'DM Mono',monospace;font-size:22px;font-weight:500;color:var(--g);margin-bottom:6px}
+.step-t{font-size:12px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.step-d{font-size:11px;color:var(--ink3);line-height:1.55}
+.acc-row{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.acc-card{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);padding:14px 10px;text-align:center;box-shadow:var(--sh)}
+.acc-dot{width:9px;height:9px;border-radius:50%;margin:0 auto 7px}
+.acc-name{font-size:11px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.acc-badge{font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;display:inline-block;margin-bottom:5px}
+.tf{background:var(--gl);color:var(--gd)}.pt{background:var(--bluel);color:#1D4ED8}.tx{background:var(--redl);color:var(--red)}
+.acc-note{font-size:10px;color:var(--ink4);line-height:1.5}
+.art-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.art-prev{background:var(--card);border:1px solid var(--bd);border-radius:var(--r2);overflow:hidden;box-shadow:var(--sh);transition:all .2s;text-decoration:none;display:block}
+.art-prev:hover{border-color:var(--g3);box-shadow:0 4px 20px rgba(0,200,150,.1);transform:translateY(-2px)}
+.art-thumb{height:100px;display:flex;align-items:center;justify-content:center;font-size:36px}
+.art-pb{padding:14px}
+.art-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--gd);margin-bottom:5px}
+.art-t{font-size:13px;font-weight:700;color:var(--ink);line-height:1.35;margin-bottom:5px}
+.art-d{font-size:11px;color:var(--ink3);line-height:1.6;margin-bottom:8px}
+.art-m{font-size:10px;color:var(--ink4)}
+.art-read{font-size:11px;font-weight:700;color:var(--g);display:inline-block;margin-top:5px}
+.cta-box{background:var(--ink);border-radius:var(--r2);padding:28px;text-align:center;margin-top:28px}
+.cta-box h2{font-size:20px;font-weight:700;color:#fff;margin-bottom:8px}
+.cta-box p{font-size:13px;color:rgba(255,255,255,.55);margin-bottom:18px}
+footer{text-align:center;padding:20px;font-size:11px;color:var(--ink4);border-top:1px solid var(--bd);background:var(--card)}
+footer a{color:var(--ink3);text-decoration:none;margin:0 7px}
+footer a:hover{color:var(--g)}
+@media(max-width:680px){.feat-grid,.steps-grid{grid-template-columns:1fr 1fr}.acc-row{grid-template-columns:repeat(3,1fr)}.art-grid{grid-template-columns:1fr}.hero h1{font-size:24px}}
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WNB4QF45SW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WNB4QF45SW');
+</script>
+</head>
+<body>
+
+<div class="topbar">
+  <div style="display:flex;align-items:center;gap:12px">
+    <a href="index.html" class="logo">Retire<b>Wise</b><span class="logo-sub">🇮🇳 India</span></a>
+    <nav style="display:flex;align-items:center;gap:2px;margin-left:8px">
+      <a href="index.html" class="nav-link active">🏠 Home</a>
+      <a href="resources.html" class="nav-link">📚 Resources</a>
+      <a href="about.html" class="nav-link">ℹ️ About</a>
+      <a href="contact.html" class="nav-link">✉️ Contact</a>
+    </nav>
+  </div>
+  <a href="calculator.html" class="nav-cta">Open Calculator →</a>
+</div>
+
+<div class="hero">
+  <div class="hero-tag">🇮🇳 Built for India · FY2025-26 Tax Rules</div>
+  <h1>Know exactly how much you can <em>withdraw</em> in retirement</h1>
+  <p class="hero-sub">Enter your NPS, EPF, PPF, Mutual Funds and FD. Get your exact monthly income after all taxes — year by year. Free, no login, no signup.</p>
+  <div class="hero-btns">
+    <a href="calculator.html" class="btn-primary">Calculate My Retirement →</a>
+    <a href="resources.html" class="btn-ghost">📚 Read the guides</a>
+  </div>
+  <div class="hero-badges">
+    <span class="h-badge">Free forever</span>
+    <span class="h-badge">No login needed</span>
+    <span class="h-badge">FY2025-26 tax rules</span>
+    <span class="h-badge">NPS · EPF · PPF · MF · FD</span>
+    <span class="h-badge">5 withdrawal strategies</span>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat"><span class="stat-num">₹0</span><span class="stat-lbl">Cost forever</span></div>
+  <div class="stat"><span class="stat-num">5</span><span class="stat-lbl">Strategies</span></div>
+  <div class="stat"><span class="stat-num">FY26</span><span class="stat-lbl">Tax rules</span></div>
+  <div class="stat"><span class="stat-num">3 min</span><span class="stat-lbl">To your number</span></div>
+  <div class="stat"><span class="stat-num">0</span><span class="stat-lbl">Data collected</span></div>
+</div>
+
+<div class="section">
+  <div class="section-tag">Why RetireWise</div>
+  <div class="section-title">Built for the Indian retiree</div>
+  <div class="section-sub">Every other calculator uses US assumptions. RetireWise is built for India's accounts, tax rules, and inflation reality.</div>
+  <div class="feat-grid">
+    <div class="feat-card"><div class="feat-icon">🧾</div><div class="feat-title">Correct India Tax</div><div class="feat-desc">New Regime FY2025-26, Sec 87A rebate, 4% cess, surcharge. NPS 60/40, EPF Sec 10(12), MF LTCG 12.5%. Combined income — no shortcuts.</div></div>
+    <div class="feat-card"><div class="feat-icon">📊</div><div class="feat-title">5 Real Strategies</div><div class="feat-desc">4% Rule, Guardrails (dynamic ±10%), Constant % of current balance, 3-bucket system, and RMD method — each with correct maths.</div></div>
+    <div class="feat-card"><div class="feat-icon">🏦</div><div class="feat-title">Multi-Account</div><div class="feat-desc">NPS, EPF, PPF, Mutual Funds and FD each taxed by their own rules. Enter balance and monthly contribution per account.</div></div>
+    <div class="feat-card"><div class="feat-icon">📅</div><div class="feat-title">Accumulation Phase</div><div class="feat-desc">Still working? Contributions compound at each account's own return rate until retirement. Auto-hidden if already retired.</div></div>
+    <div class="feat-card"><div class="feat-icon">🔥</div><div class="feat-title">FIRE Mode</div><div class="feat-desc">Plan early retirement from age 25. See if a 30–55 year horizon is sustainable with your current portfolio.</div></div>
+    <div class="feat-card"><div class="feat-icon">👆</div><div class="feat-title">Click Any Year</div><div class="feat-desc">Click any bar on the chart to see exact balance, withdrawal, and monthly income after tax for that retirement year.</div></div>
+  </div>
+</div>
+
+<div style="background:var(--card);border-top:1px solid var(--bd);border-bottom:1px solid var(--bd)">
+<div class="section">
+  <div class="section-tag">How It Works</div>
+  <div class="section-title" style="margin-bottom:18px">Your retirement plan in 4 steps</div>
+  <div class="steps-grid">
+    <div class="step-card"><div class="step-n">01</div><div class="step-t">Set your ages</div><div class="step-d">Current age, retirement age, life expectancy. How long your corpus has to compound.</div></div>
+    <div class="step-card"><div class="step-n">02</div><div class="step-t">Enter investments</div><div class="step-d">Balance and monthly contribution for NPS, EPF, PPF, MF, FD separately.</div></div>
+    <div class="step-card"><div class="step-n">03</div><div class="step-t">Pick a strategy</div><div class="step-d">5 strategies — each explained in plain English so you know which suits you.</div></div>
+    <div class="step-card"><div class="step-n">04</div><div class="step-t">See your number</div><div class="step-d">Monthly income after tax, year-by-year projection, tax breakdown, shortfall alert.</div></div>
+  </div>
+  <div style="text-align:center;margin-top:20px"><a href="calculator.html" class="btn-primary">Start — It's Free →</a></div>
+</div>
+</div>
+
+<div class="section">
+  <div class="section-tag">Supported Accounts</div>
+  <div class="section-title" style="margin-bottom:6px">Every account, correctly taxed</div>
+  <div class="section-sub">Not one flat rate. Each account uses its actual legal treatment.</div>
+  <div class="acc-row">
+    <div class="acc-card"><div class="acc-dot" style="background:#5367FF"></div><div class="acc-name">NPS</div><div class="acc-badge pt">Partial</div><div class="acc-note">60% lump sum free (Sec 10(12A)). 40% annuity as income.</div></div>
+    <div class="acc-card"><div class="acc-dot" style="background:#00C896"></div><div class="acc-name">EPF</div><div class="acc-badge tf">Tax-free</div><div class="acc-note">100% exempt 5+ yrs (Sec 10(12)). 8.25% FY2025-26.</div></div>
+    <div class="acc-card"><div class="acc-dot" style="background:#7C3AED"></div><div class="acc-name">PPF</div><div class="acc-badge tf">EEE</div><div class="acc-note">Exempt at all 3 stages. 7.1% Q1 FY2025-26.</div></div>
+    <div class="acc-card"><div class="acc-dot" style="background:#F59E0B"></div><div class="acc-name">Mutual Funds</div><div class="acc-badge pt">LTCG 12.5%</div><div class="acc-note">12.5% on gains above ₹1.25L/yr. Budget 2024.</div></div>
+    <div class="acc-card"><div class="acc-dot" style="background:#EF4444"></div><div class="acc-name">FD / Debt</div><div class="acc-badge tx">Taxable</div><div class="acc-note">Fully taxable per slab. 87A if combined ≤₹12L.</div></div>
+  </div>
+</div>
+
+<div style="background:var(--card);border-top:1px solid var(--bd);border-bottom:1px solid var(--bd)">
+<div class="section">
+  <div class="section-tag">From the Blog</div>
+  <div class="section-title" style="margin-bottom:6px">Learn before you calculate</div>
+  <div class="section-sub">Real numbers, honest examples, no jargon.</div>
+  <div class="art-grid">
+    <a href="resources.html" class="art-prev">
+      <div class="art-thumb" style="background:linear-gradient(135deg,#0D1117,#374151)">📊</div>
+      <div class="art-pb">
+        <div class="art-tag">Strategy · 9 min read</div>
+        <div class="art-t">The 4% Rule in India: Does It Actually Work? (2025)</div>
+        <div class="art-d">Ramesh, 60, Pune, ₹75L saved. Can he withdraw ₹25,000/month safely? Full calculation with Indian tax rules.</div>
+        <div class="art-m">⏱ 9 min · Beginner-friendly</div>
+        <div class="art-read">Read article →</div>
+      </div>
+    </a>
+    <a href="resources.html" class="art-prev">
+      <div class="art-thumb" style="background:linear-gradient(135deg,#1A2340,#2D3A5C)">🏙️</div>
+      <div class="art-pb">
+        <div class="art-tag">Planning · 11 min read</div>
+        <div class="art-t">How Much Do You REALLY Need to Retire in India? (2025)</div>
+        <div class="art-d">Mumbai ₹6.4Cr. Small town ₹1.2Cr. City-wise breakdown — from "I'll never retire" to retiring at 55.</div>
+        <div class="art-m">⏱ 11 min · All levels</div>
+        <div class="art-read">Read article →</div>
+      </div>
+    </a>
+  </div>
+  <div style="text-align:center;margin-top:16px"><a href="resources.html" style="font-size:12px;font-weight:700;color:var(--g);text-decoration:none">View all articles →</a></div>
+</div>
+</div>
+
+<div class="section">
+  <div class="cta-box">
+    <h2>Ready to know your retirement number?</h2>
+    <p>Free forever. No login. No email. Results in 3 minutes.</p>
+    <a href="calculator.html" class="btn-primary">Open the Free Calculator →</a>
+  </div>
+</div>
+
+<footer>
+  <div style="margin-bottom:8px">
+    <a href="index.html">🏠 Home</a><a href="calculator.html">🧮 Calculator</a><a href="resources.html">📚 Resources</a><a href="about.html">ℹ️ About</a><a href="contact.html">✉️ Contact</a><a href="privacy.html">🔒 Privacy</a>
+  </div>
+  <div style="font-size:10px">© 2025 RetireWise India · Free retirement calculator · Not financial advice · EPF 8.25% FY2025-26 · PPF 7.1%</div>
+</footer>
+</body>
+</html>
